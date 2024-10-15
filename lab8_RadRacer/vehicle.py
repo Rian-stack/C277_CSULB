@@ -19,32 +19,31 @@ class Vehicle(abc.ABC):
         self._max_speed = max_speed
 
     def fast(self, dist):
-        #temp
-        energy = 100
-        movement = 0
-        position = 0
-        if energy >= 5:
-            movement += random.randint
-        movement < self.dist:
-            position += movement
-        
-        return "(Vehicle) quickly moves " + dist +  " units!"
+        if self._energy >= 5:
+            movement = random.randint(self._min_speed, self._max_speed)
+            if movement < dist:
+                self._position += movement
+                self._energy -= 5
+                return f"({self._name}) quickly moves {movement} units!"
+            else:
+                self._position += dist
+                self._energy -= 5
+                return f"({self._name}) crashes into obstacle at {dist} units!"
+        else:
+            return f"({self._name}) does not have enough energy to move quickly!"
     
     def slow(self, dist):
-        return "(Vehicle) slowly moves " + dist +  " units!"
+        movement = min(self._min_speed // 2, dist)
+        self._position += movement
+        return f"({self._name}) slowly moves {movement} units!"
 
     def __str__(self):
-        return self.name + self.position + self.energy
+        return f"{self._name} - Position: {self._position}, Energy: {self._energy}"
     
-    #abstract methods
+    @abc.abstractmethod
     def description_string(self):
-        return self.description
+        pass
 
+    @abc.abstractmethod
     def special_move(self, dist):
-        return self.dist 
-
-    
-    
-    
-        
-        
+        pass
