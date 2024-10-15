@@ -1,4 +1,58 @@
 import vehicle
 
 class Motorcycle(vehicle.Vehicle):
-    __init__(self)
+    """
+    A subclass of Vehicle representing a Motorcycle.
+
+    Attributes:
+        Inherits all attributes from Vehicle class.
+        _lean_angle (int): The current lean angle of the motorcycle.
+    """
+
+    def __init__(self, name, initial, min_speed, max_speed):
+        """
+        Initialize a new Motorcycle instance.
+
+        Args:
+            name (str): The name of the motorcycle.
+            initial (str): The initial of the motorcycle.
+            min_speed (int): The minimum speed of the motorcycle.
+            max_speed (int): The maximum speed of the motorcycle.
+        """
+        super().__init__(name, initial, min_speed, max_speed)
+        self._lean_angle = 0
+
+    def lean(self, angle):
+        """
+        Set the lean angle of the motorcycle.
+
+        Args:
+            angle (int): The angle to lean, between -45 and 45 degrees.
+        """
+        if -45 <= angle <= 45:
+            self._lean_angle = angle
+            print(f"Leaning at {self._lean_angle} degrees.")
+        else:
+            print("Error: Lean angle must be between -45 and 45 degrees.")
+
+    def get_lean_angle(self):
+        """
+        Get the current lean angle.
+
+        Returns:
+            int: The current lean angle.
+        """
+        return self._lean_angle
+
+    def move(self):
+        """
+        Override the move method to account for lean angle.
+
+        Returns:
+            int: The distance moved.
+        """
+        base_move = super().move()
+        lean_bonus = abs(self._lean_angle) // 15  # Every 15 degrees of lean adds 1 to movement
+        actual_move = base_move + lean_bonus
+        print(f"Moved {actual_move} units. Lean bonus: {lean_bonus}")
+        return actual_move
