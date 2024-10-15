@@ -1,7 +1,7 @@
 import abc
 import random
 
-class Vehicle:
+class Vehicle(abc.ABC):
     '''
     Attributes:
         _name – vehicle’s name, 
