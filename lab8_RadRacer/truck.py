@@ -22,6 +22,26 @@ class Truck(vehicle.Vehicle):
         super().__init__(name, initial, min_speed, max_speed)
         self._cargo = 0
 
+    def description_string(self):
+        """
+        Return a string description of the truck.
+
+        Returns:
+            str: A description of the truck including its name and cargo amount.
+        """
+        return f"{self._name} (Truck) - Cargo: {self._cargo}"
+
+    def special_move(self):
+        """
+        Perform a special move (dump all cargo).
+
+        Returns:
+            str: A description of the special move.
+        """
+        dumped_cargo = self._cargo
+        self._cargo = 0
+        return f"{self._name} dumped all {dumped_cargo} units of cargo!"
+
     def load_cargo(self, amount):
         """
         Load cargo onto the truck.

@@ -22,6 +22,26 @@ class Motorcycle(vehicle.Vehicle):
         super().__init__(name, initial, min_speed, max_speed)
         self._lean_angle = 0
 
+    def description_string(self):
+        """
+        Return a string description of the motorcycle.
+
+        Returns:
+            str: A description of the motorcycle including its name and lean angle.
+        """
+        return f"{self._name} (Motorcycle) - Lean Angle: {self._lean_angle}"
+
+    def special_move(self):
+        """
+        Perform a special move (extreme lean).
+
+        Returns:
+            str: A description of the special move.
+        """
+        extreme_lean = 45  # Maximum lean angle
+        self.lean(extreme_lean)
+        return f"{self._name} performed an extreme lean at {extreme_lean} degrees!"
+
     def lean(self, angle):
         """
         Set the lean angle of the motorcycle.

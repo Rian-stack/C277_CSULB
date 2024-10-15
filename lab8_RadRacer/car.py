@@ -22,6 +22,27 @@ class Car(vehicle.Vehicle):
         super().__init__(name, initial, min_speed, max_speed)
         self._nitro = 3  # Start with 3 nitro boosts
 
+    def description_string(self):
+        """
+        Return a string description of the car.
+
+        Returns:
+            str: A description of the car including its name and nitro amount.
+        """
+        return f"{self._name} (Car) - Nitro: {self._nitro}"
+
+    def special_move(self):
+        """
+        Perform a special move (use nitro).
+
+        Returns:
+            str: A description of the special move.
+        """
+        if self.use_nitro():
+            return f"{self._name} used nitro boost!"
+        else:
+            return f"{self._name} tried to use nitro, but none left!"
+
     def use_nitro(self):
         """
         Use a nitro boost if available.
