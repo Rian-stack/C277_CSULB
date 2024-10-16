@@ -5,6 +5,9 @@ class Truck(vehicle.Vehicle):
     def __init__(self):
         super().__init__("Behemoth Truck", 'T', 4, 8)
 
+    def description_string(self):
+        return f"Truck: {self._name} - A powerful truck ({self._min_speed}-{self._max_speed} units). Special: Ram (2x speed and it smashes through obstacles)"
+    
     def special_move(self, dist):
         """
         Move the truck with a special ram action if there is sufficient energy.
@@ -23,5 +26,4 @@ class Truck(vehicle.Vehicle):
         else:
             return f"({self._name}) does not have enough energy to use ram!"
     
-    def description(self):
-        return f"Truck: {self._name} - A powerful truck ({self._min_speed}-{self._max_speed} units). Special: Ram (2x speed and it smashes through obstacles)"
+    
