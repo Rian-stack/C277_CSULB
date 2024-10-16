@@ -9,12 +9,19 @@ OBSTACLE_CHANCE = 0.2
 LANES = 3
 
 def create_track():
-    return [['0' if random.random() < OBSTACLE_CHANCE else '-' for _ in range(TRACK_LENGTH)] for _ in range(LANES)]
+    track = [['-' for _ in range(TRACK_LENGTH)] for _ in range(LANES)]
+    for lane in track:
+        obstacle_positions = random.sample(range(1, TRACK_LENGTH - 1), 2)  # Exclude start and finish
+        for pos in obstacle_positions:
+            lane[pos] = '0'
+    return track
 
 def display_track(track, vehicles):
     display_track = [lane.copy() for lane in track]
     for i, vehicle in enumerate(vehicles):
         pos = min(vehicle.get_position(), TRACK_LENGTH - 1)
+        if pos > 0:
+            display_track[i][pos-1] = '*'  # Leave a '*' in the previous position
         display_track[i][pos] = 'P' if vehicle._initial == 'P' else vehicle._initial
     for lane in display_track:
         print(''.join(lane))
