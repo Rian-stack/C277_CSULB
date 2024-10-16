@@ -21,23 +21,28 @@ class RaceTrack:
         return track
 
     def display(self, vehicles):
-        display_track = [lane.copy() for lane in self.track]
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.get_position(), self.length - 1)
-            display_track[i][pos] = 'P' if vehicle.get_initial() == 'P' else vehicle.get_initial()
-            # Add '*' for the previous position
-            if self.vehicle_positions[i] > 0:
-                display_track[i][self.vehicle_positions[i]] = '*'
+            # Add '*' for the previous position and save it on the track
+            if self.vehicle_positions[i] > 0 and self.track[i][self.vehicle_positions[i]] == '-':
+                self.track[i][self.vehicle_positions[i]] = '*'
+            # Place the vehicle on the track
+            self.track[i][pos] = 'P' if vehicle.get_initial() == 'P' else vehicle.get_initial()
             self.vehicle_positions[i] = pos  # Update previous position
-        for lane in display_track:
+        for lane in self.track:
             print(''.join(lane))
+        # Reset vehicle positions on the track to '-' or '*'
+        for i, vehicle in enumerate(vehicles):
+            pos = vehicle.get_position()
+            self.track[i][pos] = '*' if self.track[i][pos] != '0' else '0'
 
     def is_obstacle_ahead(self, lane, position):
         return self.track[lane][position] == '0'
 
     def clear_obstacles(self, lane, start_pos, end_pos):
         for i in range(start_pos, min(end_pos, self.length)):
-            self.track[lane][i] = '-'
+            if self.track[lane][i] == '0':
+                self.track[lane][i] = '-'
 
 class Race:
     def __init__(self, player_vehicle, vehicles, track):
