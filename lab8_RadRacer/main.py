@@ -87,19 +87,11 @@ class Race:
                         break
 
                 if random.random() < 0.2:  # 20% chance of special move
+                    result = opponent.special_move(next_obstacle)
+                    print(result)
                     if isinstance(opponent, truck.Truck):
-                        result = opponent.special_move(next_obstacle)
-                        print(result)
                         # Clear obstacles if it's a truck
                         self.track.clear_obstacles(opponent_lane, opponent.get_position(), self.track.length)
-                    else:
-                        movement = opponent.special_move()
-                        if movement >= next_obstacle:
-                            opponent._position = next_obstacle - 1
-                            print(f"({opponent._name}) crashes into an obstacle and stops at {opponent._position} units!")
-                        else:
-                            opponent._position += movement
-                            print(f"({opponent._name}) uses special move and travels {movement} units!")
                 elif random.random() < 0.7:  # 70% chance of fast move
                     result = opponent.fast(next_obstacle)
                     print(result)
