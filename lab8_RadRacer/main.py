@@ -65,12 +65,19 @@ class Race:
         # Computer's Turn
         for opponent in self.vehicles:
             if opponent != self.player:
+                opponent_lane = self.vehicles.index(opponent)
+                next_obstacle = self.track.length
+                for i in range(opponent.get_position() + 1, self.track.length):
+                    if self.track.is_obstacle_ahead(opponent_lane, i):
+                        next_obstacle = i - opponent.get_position()
+                        break
+
                 if random.random() < 0.2:  # 20% chance of special move
-                    result = opponent.special_move(None)
+                    result = opponent.special_move()
                 elif random.random() < 0.7:  # 70% chance of fast move
-                    result = opponent.fast(None)
+                    result = opponent.fast(next_obstacle)
                 else:
-                    result = opponent.slow(None)
+                    result = opponent.slow(next_obstacle)
                 print(result)
 
     def get_winner(self):

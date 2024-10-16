@@ -30,19 +30,19 @@ class Vehicle(abc.ABC):
         """Set the initial of the vehicle."""
         self._initial = initial
 
-    def fast(self, dist):
+    def fast(self, dist=None):
         """
         Move the vehicle quickly, consuming energy.
 
         Args:
-            dist (int): The distance to the next obstacle.
+            dist (int, optional): The distance to the next obstacle. If None, move freely.
 
         Returns:
             str: A description of the movement.
         """
         if self._energy >= 5:
             movement = random.randint(self._min_speed, self._max_speed)
-            if movement < dist:
+            if dist is None or movement < dist:
                 self._position += movement
                 self._energy -= 5
                 return f"({self._name}) quickly moves {movement} units!"
