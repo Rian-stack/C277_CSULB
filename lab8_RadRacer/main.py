@@ -80,6 +80,10 @@ class Race:
                 else:
                     self.player._position += movement
                     print(f"({self.player._name}) uses special move and travels {movement} units!")
+            
+            # Clear obstacles if it's a truck
+            if isinstance(self.player, truck.Truck):
+                self.track.clear_obstacles(player_lane, self.player.get_position(), self.track.length)
 
         # Computer's Turn
         for opponent in self.vehicles:
@@ -95,6 +99,8 @@ class Race:
                     if isinstance(opponent, truck.Truck):
                         result = opponent.special_move(next_obstacle)
                         print(result)
+                        # Clear obstacles if it's a truck
+                        self.track.clear_obstacles(opponent_lane, opponent.get_position(), self.track.length)
                     else:
                         movement = opponent.special_move()
                         if movement >= next_obstacle:
