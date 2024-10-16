@@ -22,6 +22,14 @@ class Vehicle(abc.ABC):
         self._position = 0
         self._energy = 100
 
+    def get_initial(self):
+        """Get the initial of the vehicle."""
+        return self._initial
+
+    def set_initial(self, initial):
+        """Set the initial of the vehicle."""
+        self._initial = initial
+
     def fast(self, dist):
         """
         Move the vehicle quickly, consuming energy.
