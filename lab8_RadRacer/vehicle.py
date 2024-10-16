@@ -42,14 +42,14 @@ class Vehicle(abc.ABC):
         """
         if self._energy >= 5:
             movement = random.randint(self._min_speed, self._max_speed)
-            if dist is None or movement < dist:
-                self._position += movement
-                self._energy -= 5
-                return f"({self._name}) quickly moves {movement} units!"
+            if dist is not None:
+                movement = min(movement, dist - 1)  # Limit movement to just before the obstacle
+            self._position += movement
+            self._energy -= 5
+            if dist is not None and movement == dist - 1:
+                return f"({self._name}) quickly moves {movement} units and stops at an obstacle!"
             else:
-                self._position = dist - 1  # Set position to the space just before the obstacle
-                self._energy -= 5
-                return f"({self._name}) crashes into obstacle and stops at {self._position} units!"
+                return f"({self._name}) quickly moves {movement} units!"
         else:
             return f"({self._name}) does not have enough energy to move quickly!"
 

@@ -74,12 +74,12 @@ class Race:
                 print(result)
             else:
                 movement = self.player.special_move()
-                if movement >= next_obstacle:
-                    self.player._position = next_obstacle - 1
-                    print(f"({self.player._name}) crashes into an obstacle and stops at {self.player._position} units!")
+                actual_movement = min(movement, next_obstacle - 1)
+                self.player._position += actual_movement
+                if actual_movement < movement:
+                    print(f"({self.player._name}) uses special move and travels {actual_movement} units, stopping at an obstacle!")
                 else:
-                    self.player._position += movement
-                    print(f"({self.player._name}) uses special move and travels {movement} units!")
+                    print(f"({self.player._name}) uses special move and travels {actual_movement} units!")
 
         # Computer's Turn
         for opponent in self.vehicles:
@@ -97,12 +97,12 @@ class Race:
                         print(result)
                     else:
                         movement = opponent.special_move()
-                        if movement >= next_obstacle:
-                            opponent._position = next_obstacle - 1
-                            print(f"({opponent._name}) crashes into an obstacle and stops at {opponent._position} units!")
+                        actual_movement = min(movement, next_obstacle - 1)
+                        opponent._position += actual_movement
+                        if actual_movement < movement:
+                            print(f"({opponent._name}) uses special move and travels {actual_movement} units, stopping at an obstacle!")
                         else:
-                            opponent._position += movement
-                            print(f"({opponent._name}) uses special move and travels {movement} units!")
+                            print(f"({opponent._name}) uses special move and travels {actual_movement} units!")
                 elif random.random() < 0.7:  # 70% chance of fast move
                     result = opponent.fast(next_obstacle)
                     print(result)
