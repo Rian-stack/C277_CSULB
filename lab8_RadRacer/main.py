@@ -57,9 +57,9 @@ class Race:
         action = check_input.get_int_range("Choose action (1. Fast, 2. Slow, 3. Special Move): ", 1, 3)
         player_lane = self.vehicles.index(self.player)
         next_obstacle = self.track.length
-        for i in range(self.player.get_position() + 1, self.track.length):
+        for i in range(self.player.position + 1, self.track.length):
             if self.track.is_obstacle_ahead(player_lane, i):
-                next_obstacle = i - self.player.get_position()
+                next_obstacle = i - self.player.position
                 break
 
         if action == 1:
@@ -74,16 +74,16 @@ class Race:
             
             # Clear obstacles if it's a truck
             if isinstance(self.player, truck.Truck):
-                self.track.clear_obstacles(player_lane, self.player.get_position(), self.track.length)
+                self.track.clear_obstacles(player_lane, self.player.position, self.track.length)
 
         # Computer's Turn
         for opponent in self.vehicles:
             if opponent != self.player:
                 opponent_lane = self.vehicles.index(opponent)
                 next_obstacle = self.track.length
-                for i in range(opponent.get_position() + 1, self.track.length):
+                for i in range(opponent.position + 1, self.track.length):
                     if self.track.is_obstacle_ahead(opponent_lane, i):
-                        next_obstacle = i - opponent.get_position()
+                        next_obstacle = i - opponent.position
                         break
 
                 if random.random() < 0.2:  # 20% chance of special move
@@ -91,7 +91,7 @@ class Race:
                     print(result)
                     if isinstance(opponent, truck.Truck):
                         # Clear obstacles if it's a truck
-                        self.track.clear_obstacles(opponent_lane, opponent.get_position(), self.track.length)
+                        self.track.clear_obstacles(opponent_lane, opponent.position, self.track.length)
                 elif random.random() < 0.7:  # 70% chance of fast move
                     result = opponent.fast(next_obstacle)
                     print(result)
@@ -100,7 +100,7 @@ class Race:
                     print(result)
 
     def get_winner(self):
-        return max(self.vehicles, key=lambda v: v.get_position())
+        return max(self.vehicles, key=lambda v: v.position)
 
 def main():
     print("Rad Racer!")
@@ -123,7 +123,7 @@ def main():
     track = RaceTrack()
     race = Race(player, vehicles, track)
 
-    while max(v.get_position() for v in vehicles) < track.length:
+    while max(v.position for v in vehicles) < track.length:
         print("\n" + str(c))
         print(str(m))
         print(str(t))
@@ -132,8 +132,8 @@ def main():
     
     # Ensure all vehicles are at or past the finish line for the final display
     for vehicle in vehicles:
-        if vehicle.get_position() < track.length:
-            vehicle._position = track.length
+        if vehicle.position < track.length:
+            vehicle.position = track.length
     
     track.display(vehicles)  # Display final positions
     winner = race.get_winner()
