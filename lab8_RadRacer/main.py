@@ -188,3 +188,24 @@ def main():
     vehicles = [c, m, t]
     player = vehicles[choice - 1]
     player.initial = 'P'
+
+    # Create the race track and start the race
+    track = RaceTrack()
+    race = Race(player, vehicles, track)
+
+    # Main game loop
+    while all(v.position < track.length for v in vehicles):
+        track.display(vehicles)
+        print("\nCurrent standings:")
+        for v in vehicles:
+            print(v)
+        race.play_turn()
+        print("\n" + "="*50 + "\n")
+
+    # Display final results
+    track.display(vehicles)
+    winner = race.get_winner()
+    print(f"\nThe winner is {winner._name}!")
+
+if __name__ == "__main__":
+    main()
