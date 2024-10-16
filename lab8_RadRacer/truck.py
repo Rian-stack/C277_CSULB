@@ -22,7 +22,7 @@ class Truck(vehicle.Vehicle):
             self._energy -= 15
             movement = 2 * random.randint(self._min_speed, self._max_speed)
             self._position += movement
-            return f"({self._name}) uses ram and travels {movement} units, smashing through any obstacles!"
+            return f"({self._name}) uses ram and travels {movement} units, removing all obstacles ahead!"
         else:
             return f"({self._name}) does not have enough energy to use ram!"
     

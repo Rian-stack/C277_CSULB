@@ -41,8 +41,8 @@ class RaceTrack:
     def is_obstacle_ahead(self, lane, position):
         return self.track[lane][position] == '0'
 
-    def clear_obstacles(self, lane, start_pos, end_pos):
-        for i in range(start_pos, min(end_pos, self.length)):
+    def clear_obstacles(self, lane, start_pos):
+        for i in range(start_pos, self.length):
             if self.track[lane][i] == '0':
                 self.track[lane][i] = '-'
 
@@ -72,9 +72,9 @@ class Race:
             result = self.player.special_move(next_obstacle)
             print(result)
             
-            # Clear obstacles if it's a truck
-            if isinstance(self.player, truck.Truck):
-                self.track.clear_obstacles(player_lane, self.player.position, self.track.length)
+            # Clear obstacles if it's a truck using special move
+            if isinstance(self.player, truck.Truck) and action == 3:
+                self.track.clear_obstacles(player_lane, self.player.position)
 
         # Computer's Turn
         for opponent in self.vehicles:
@@ -90,8 +90,8 @@ class Race:
                     result = opponent.special_move(next_obstacle)
                     print(result)
                     if isinstance(opponent, truck.Truck):
-                        # Clear obstacles if it's a truck
-                        self.track.clear_obstacles(opponent_lane, opponent.position, self.track.length)
+                        # Clear obstacles if it's a truck using special move
+                        self.track.clear_obstacles(opponent_lane, opponent.position)
                 elif random.random() < 0.7:  # 70% chance of fast move
                     result = opponent.fast(next_obstacle)
                     print(result)
@@ -123,12 +123,19 @@ def main():
     track = RaceTrack()
     race = Race(player, vehicles, track)
 
-    while max(v.position for v in vehicles) < track.length:
+    winner = None
+    while not winner:
         print("\n" + str(c))
         print(str(m))
         print(str(t))
         track.display(vehicles)  # Display track at the beginning of each turn
         race.play_turn()
+        
+        # Check for a winner
+        for vehicle in vehicles:
+            if vehicle.position >= track.length:
+                winner = vehicle
+                break
     
     # Ensure all vehicles are at or past the finish line for the final display
     for vehicle in vehicles:
@@ -136,7 +143,6 @@ def main():
             vehicle.position = track.length
     
     track.display(vehicles)  # Display final positions
-    winner = race.get_winner()
     print(f"\nThe winner is {winner._name}!")
 
 if __name__ == "__main__":
