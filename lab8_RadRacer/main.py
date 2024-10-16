@@ -55,12 +55,16 @@ class Race:
 
         if action == 1:
             result = self.player.fast(next_obstacle)
+            print(result)
         elif action == 2:
             result = self.player.slow(next_obstacle)
+            print(result)
         else:
-            result = self.player.special_move(next_obstacle)
-
-        print(result)
+            movement = self.player.special_move()
+            if movement >= next_obstacle:
+                print(f"({self.player._name}) crashes into an obstacle and stops at {self.player.get_position()} units!")
+            else:
+                print(f"({self.player._name}) uses special move and travels {movement} units!")
 
         # Computer's Turn
         for opponent in self.vehicles:
@@ -73,12 +77,17 @@ class Race:
                         break
 
                 if random.random() < 0.2:  # 20% chance of special move
-                    result = opponent.special_move()
+                    movement = opponent.special_move()
+                    if movement >= next_obstacle:
+                        print(f"({opponent._name}) crashes into an obstacle and stops at {opponent.get_position()} units!")
+                    else:
+                        print(f"({opponent._name}) uses special move and travels {movement} units!")
                 elif random.random() < 0.7:  # 70% chance of fast move
                     result = opponent.fast(next_obstacle)
+                    print(result)
                 else:
                     result = opponent.slow(next_obstacle)
-                print(result)
+                    print(result)
 
     def get_winner(self):
         return max(self.vehicles, key=lambda v: v.get_position())
