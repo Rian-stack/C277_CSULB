@@ -187,4 +187,4 @@ def main():
 
     vehicles = [c, m, t]
     player = vehicles[choice - 1]
-    player.initial = '
+    player.initial = 'P'
