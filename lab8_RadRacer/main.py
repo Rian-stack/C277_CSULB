@@ -1,6 +1,6 @@
-from car import Car
-from motorcycle import Motorcycle
-from truck import Truck
+import car
+import motorcycle
+import truck
 import check_input
 import random
 
@@ -30,17 +30,17 @@ def display_track(track, vehicles):
 def main():
     print("Rad Racer!")
     print("Choose a vehicle and race it down the track (player = 'P'). Slow down for obstacles ('0') or else you'll crash!")
-    print("1. Lightning Car - a fast car (6-8 units). Special: Nitro Boost (1.5x speed)")
+    print("1. Lightning car.Car - a fast car (6-8 units). Special: Nitro Boost (1.5x speed)")
     print("2. Swift Bike - a speedy motorcycle (6-8 units). Special: Wheelie (2x speed but there's a chance you'll crash).")
     print("3. Behemoth Truck - a heavy truck (4-8 units). Special: Ram (2x speed and it smashes through obstacles).")
 
     choice = check_input.get_int_range("Choose your vehicle (1-3): ", 1, 3)
 
-    car = Car("Lightning Car", "C", 6, 8)
-    motorcycle = Motorcycle("Swift Bike", "M", 6, 8)
-    truck = Truck("Behemoth Truck", "T", 4, 8)
+    c = car.Car("Lightning car.Car", "C", 6, 8)
+    m = motorcycle.Motorcycle("Swift Bike", "M", 6, 8)
+    t = truck.Truck("Behemoth Truck", "T", 4, 8)
 
-    vehicles = [car, motorcycle, truck]
+    vehicles = [c, m, t]
     player = vehicles[choice - 1]
     player._initial = 'P'
 
@@ -73,28 +73,27 @@ def main():
             player._position -= distance // 2
 
         # AI turns
-        for ai in vehicles:
-            if ai != player:
+        for opponent in vehicles:
+            if opponent != player:
                 if random.random() < 0.2:  # 20% chance of special move
-                    if isinstance(ai, Truck):
-                        distance, smash = ai.special_move()
+                    if isinstance(opponent, Truck):
+                        distance, smash = opponent.special_move()
                         if smash:
-                            ai_lane = vehicles.index(ai)
-                            for i in range(ai.get_position(), min(ai.get_position() + distance, TRACK_LENGTH)):
-                                track[ai_lane][i] = '-'
+                            opponent_lane = vehicles.index(opponent)
+                            for i in range(opponent.get_position(), min(opponent.get_position() + distance, TRACK_LENGTH)):
+                                track[opponent_lane][i] = '-'
                     else:
-                        distance = ai.special_move()
+                        distance = opponent.special_move()
                 elif random.random() < 0.7:  # 70% chance of fast move
-                    distance = ai.fast()
+                    distance = opponent.fast()
                 else:
-                    distance = ai.slow()
+                    distance = opponent.slow()
 
-                ai_lane = vehicles.index(ai)
-                if track[ai_lane][min(ai.get_position() + distance, TRACK_LENGTH - 1)] == '0' and not isinstance(ai, Truck):
-                    ai._position -= distance // 2
+                opponent_lane = vehicles.index(opponent)
+                if track[opponent_lane][min(opponent.get_position() + distance, TRACK_LENGTH - 1)] == '0' and not isinstance(opponent, Truck):
+                    opponent._position -= distance // 2
 
     winner = max(vehicles, key=lambda v: v.get_position())
     print(f"\nThe winner is {winner._name}!")
 
-if __name__ == "__main__":
-    main()
+main()
