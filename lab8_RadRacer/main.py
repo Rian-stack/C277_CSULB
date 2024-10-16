@@ -34,7 +34,7 @@ class RaceTrack:
             print(''.join(lane))
         # Reset vehicle positions on the track to '-' or '*'
         for i, vehicle in enumerate(vehicles):
-            pos = min(vehicle.get_position(), self.length - 1)
+            pos = min(vehicle.position, self.length - 1)
             if pos < self.length:
                 self.track[i][pos] = '*' if self.track[i][pos] != '0' else '0'
 
@@ -118,7 +118,7 @@ def main():
 
     vehicles = [c, m, t]
     player = vehicles[choice - 1]
-    player.set_initial('P')
+    player.initial = 'P'
 
     track = RaceTrack()
     race = Race(player, vehicles, track)
