@@ -22,13 +22,13 @@ class RaceTrack:
 
     def display(self, vehicles):
         for i, vehicle in enumerate(vehicles):
-            pos = min(vehicle.get_position(), self.length - 1)
+            pos = min(vehicle.position, self.length - 1)
             # Add '*' for the previous position and save it on the track
             if self.vehicle_positions[i] > 0 and self.vehicle_positions[i] < self.length and self.track[i][self.vehicle_positions[i]] == '-':
                 self.track[i][self.vehicle_positions[i]] = '*'
             # Place the vehicle on the track
             if pos < self.length:
-                self.track[i][pos] = 'P' if vehicle.get_initial() == 'P' else vehicle.get_initial()
+                self.track[i][pos] = 'P' if vehicle.initial == 'P' else vehicle.initial
             self.vehicle_positions[i] = pos  # Update previous position
         for lane in self.track:
             print(''.join(lane))
