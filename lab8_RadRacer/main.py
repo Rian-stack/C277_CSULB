@@ -38,7 +38,7 @@ def main():
 
     c = car.Car("Lightning car.Car", "C", 6, 8)
     m = motorcycle.Motorcycle("Swift Bike", "M", 6, 8)
-    t = truck.Truck("Behemoth Truck", "T", 4, 8)
+    t = Truck("Behemoth Truck", "T", 4, 8)
 
     vehicles = [c, m, t]
     player = vehicles[choice - 1]
@@ -47,9 +47,9 @@ def main():
     track = create_track()
 
     while all(v.get_position() < TRACK_LENGTH for v in vehicles):
-        print("\n" + str(car))
-        print(str(motorcycle))
-        print(str(truck))
+        print("\n" + str(c))
+        print(str(m))
+        print(str(t))
         display_track(track, vehicles)
 
         # Player's turn
