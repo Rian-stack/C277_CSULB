@@ -5,7 +5,26 @@ import check_input
 import random
 
 class RaceTrack:
+    """
+    Represents the race track for the game.
+
+    Attributes:
+        length (int): The length of the track.
+        lanes (int): The number of lanes on the track.
+        obstacle_chance (float): The probability of placing an obstacle on each track position.
+        track (list): A 2D list representing the track layout.
+        vehicle_positions (list): A list to store the previous positions of vehicles.
+    """
+
     def __init__(self, length=100, lanes=3, obstacle_chance=0.2):
+        """
+        Initialize a new RaceTrack instance.
+
+        Args:
+            length (int, optional): The length of the track. Defaults to 100.
+            lanes (int, optional): The number of lanes on the track. Defaults to 3.
+            obstacle_chance (float, optional): The probability of placing an obstacle. Defaults to 0.2.
+        """
         self.length = length
         self.lanes = lanes
         self.obstacle_chance = obstacle_chance
@@ -13,6 +32,12 @@ class RaceTrack:
         self.vehicle_positions = [0] * lanes  # Store previous positions
 
     def _create_track(self):
+        """
+        Create the initial track layout with obstacles.
+
+        Returns:
+            list: A 2D list representing the track layout.
+        """
         track = [['-' for _ in range(self.length)] for _ in range(self.lanes)]
         for lane in track:
             obstacle_positions = random.sample(range(1, self.length - 1), 2)  # Exclude start and finish
@@ -21,6 +46,12 @@ class RaceTrack:
         return track
 
     def display(self, vehicles):
+        """
+        Display the current state of the race track.
+
+        Args:
+            vehicles (list): A list of Vehicle objects representing the racers.
+        """
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.position, self.length - 1)
             # Add '*' for the previous position and save it on the track
@@ -39,20 +70,57 @@ class RaceTrack:
                 self.track[i][pos] = '*' if self.track[i][pos] != '0' else '0'
 
     def is_obstacle_ahead(self, lane, position):
+        """
+        Check if there's an obstacle ahead at the given lane and position.
+
+        Args:
+            lane (int): The lane number to check.
+            position (int): The position to check.
+
+        Returns:
+            bool: True if there's an obstacle, False otherwise.
+        """
         return self.track[lane][position] == '0'
 
     def clear_obstacles(self, lane, start_pos):
+        """
+        Clear obstacles from the given lane starting from the start_pos.
+
+        Args:
+            lane (int): The lane number to clear obstacles from.
+            start_pos (int): The starting position to clear obstacles from.
+        """
         for i in range(start_pos, self.length):
             if self.track[lane][i] == '0':
                 self.track[lane][i] = '-'
 
 class Race:
+    """
+    Represents a race in the game.
+
+    Attributes:
+        player (Vehicle): The player's vehicle.
+        vehicles (list): A list of all vehicles in the race.
+        track (RaceTrack): The race track.
+    """
+
     def __init__(self, player_vehicle, vehicles, track):
+        """
+        Initialize a new Race instance.
+
+        Args:
+            player_vehicle (Vehicle): The player's vehicle.
+            vehicles (list): A list of all vehicles in the race.
+            track (RaceTrack): The race track.
+        """
         self.player = player_vehicle
         self.vehicles = vehicles
         self.track = track
 
     def play_turn(self):
+        """
+        Play a single turn of the race, including the player's turn and the computer-controlled vehicles' turns.
+        """
         # Player's turn
         action = check_input.get_int_range("Choose action (1. Fast, 2. Slow, 3. Special Move): ", 1, 3)
         player_lane = self.vehicles.index(self.player)
@@ -92,9 +160,18 @@ class Race:
                 print(result)
 
     def get_winner(self):
+        """
+        Determine the winner of the race.
+
+        Returns:
+            Vehicle: The vehicle that has progressed the furthest on the track.
+        """
         return max(self.vehicles, key=lambda v: v.position)
 
 def main():
+    """
+    The main function to run the Rad Racer game.
+    """
     print("Rad Racer!")
     print("Choose a vehicle and race it down the track (player = 'P'). Slow down for obstacles ('0') or else you'll crash!")
     print("1. Lightning Car - a fast car (6-8 units). Special: Nitro Boost (1.5x speed)")
@@ -110,32 +187,4 @@ def main():
 
     vehicles = [c, m, t]
     player = vehicles[choice - 1]
-    player.initial = 'P'
-
-    track = RaceTrack()
-    race = Race(player, vehicles, track)
-
-    winner = None
-    while not winner:
-        print("\n" + str(c))
-        print(str(m))
-        print(str(t))
-        track.display(vehicles)  # Display track at the beginning of each turn
-        race.play_turn()
-        
-        # Check for a winner
-        for vehicle in vehicles:
-            if vehicle.position >= track.length:
-                winner = vehicle
-                break
-    
-    # Ensure all vehicles are at or past the finish line for the final display
-    for vehicle in vehicles:
-        if vehicle.position < track.length:
-            vehicle.position = track.length
-    
-    track.display(vehicles)  # Display final positions
-    print(f"\nThe winner is {winner._name}!")
-
-if __name__ == "__main__":
-    main()
+    player.initial = '

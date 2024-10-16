@@ -15,6 +15,15 @@ class Vehicle(abc.ABC):
     """
 
     def __init__(self, name, initial, min_speed, max_speed):
+        """
+        Initialize a new Vehicle instance.
+
+        Args:
+            name (str): The name of the vehicle.
+            initial (str): The initial letter representing the vehicle on the track.
+            min_speed (int): The minimum speed of the vehicle.
+            max_speed (int): The maximum speed of the vehicle.
+        """
         self._name = name
         self._initial = initial
         self._min_speed = min_speed
@@ -24,27 +33,27 @@ class Vehicle(abc.ABC):
 
     @property
     def initial(self):
-        """Get the initial of the vehicle."""
+        """str: The initial letter representing the vehicle on the track."""
         return self._initial
 
     @initial.setter
     def initial(self, value):
-        """Set the initial of the vehicle."""
+        """Set the initial letter representing the vehicle on the track."""
         self._initial = value
 
     @property
     def position(self):
-        """Get the current position of the vehicle."""
+        """int: The current position of the vehicle on the track."""
         return self._position
 
     @position.setter
     def position(self, value):
-        """Set the current position of the vehicle."""
+        """Set the current position of the vehicle on the track."""
         self._position = value
 
     @property
     def energy(self):
-        """Get the current energy level of the vehicle."""
+        """int: The current energy level of the vehicle."""
         return self._energy
 
     @energy.setter
@@ -57,7 +66,7 @@ class Vehicle(abc.ABC):
         Move the vehicle quickly, consuming 5 energy.
 
         Args:
-            dist (int, optional): The distance to the next obstacle. If None, move freely.
+            dist (int): The distance to the next obstacle.
 
         Returns:
             str: A description of the movement.
@@ -90,18 +99,26 @@ class Vehicle(abc.ABC):
         return f"({self._name}) slowly moves {movement} units!"
     
     def __str__(self):
+        """
+        Return a string representation of the vehicle.
+
+        Returns:
+            str: A string containing the vehicle's name, position, and energy.
+        """
         return f"{self._name} [Position - {self.position}, Energy - {self.energy}]"
 
-    # abstract methods
     @abc.abstractmethod
-    def special_move(self):
+    def special_move(self, dist):
         """
         Execute the vehicle's special move.
 
         This method should be implemented by subclasses.
 
+        Args:
+            dist (int): The distance to the next obstacle.
+
         Returns:
-            int: The distance moved by the special move.
+            str: A description of the special move's outcome.
         """
         pass
 
