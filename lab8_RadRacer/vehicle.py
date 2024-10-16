@@ -22,17 +22,9 @@ class Vehicle(abc.ABC):
         self._position = 0
         self._energy = 100
 
-    def get_initial(self):
-        """Get the initial of the vehicle."""
-        return self._initial
-
-    def set_initial(self, initial):
-        """Set the initial of the vehicle."""
-        self._initial = initial
-
-    def fast(self, dist=None):
+    def fast(self, dist):
         """
-        Move the vehicle quickly, consuming energy.
+        Move the vehicle quickly, consuming 5 energy.
 
         Args:
             dist (int, optional): The distance to the next obstacle. If None, move freely.
@@ -52,8 +44,6 @@ class Vehicle(abc.ABC):
                 return f"({self._name}) quickly moves {movement} units!"
         else:
             return f"({self._name}) does not have enough energy to move quickly!"
-
-
     
     def slow(self, dist):
         """
@@ -68,7 +58,11 @@ class Vehicle(abc.ABC):
         movement = min(self._min_speed // 2, dist)
         self._position += movement
         return f"({self._name}) slowly moves {movement} units!"
+    
+    def __str__(self):
+        return f"{self._name} [Position - {self._position}, Energy - {self._energy}]"
 
+    # abstract methods
     @abc.abstractmethod
     def special_move(self):
         """
@@ -82,7 +76,7 @@ class Vehicle(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def description(self):
+    def description_string(self):
         """
         Provide a description of the vehicle.
 
@@ -93,6 +87,15 @@ class Vehicle(abc.ABC):
         """
         pass
 
+    # decorators
+    def get_initial(self):
+        """Get the initial of the vehicle."""
+        return self._initial
+
+    def set_initial(self, initial):
+        """Set the initial of the vehicle."""
+        self._initial = initial
+
     def get_position(self):
         """Get the current position of the vehicle."""
         return self._position
@@ -101,5 +104,4 @@ class Vehicle(abc.ABC):
         """Get the current energy level of the vehicle."""
         return self._energy
 
-    def __str__(self):
-        return f"{self._name} [Position - {self._position}, Energy - {self._energy}]"
+    
