@@ -121,7 +121,7 @@ def main():
         race.play_turn()
 
     winner = race.get_winner()
-    print(f"\nThe winner is {winner.get_name()}!")
+    print(f"\nThe winner is {winner._name}!")
 
 if __name__ == "__main__":
     main()
