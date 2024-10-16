@@ -71,8 +71,10 @@ class Race:
         else:
             movement = self.player.special_move()
             if movement >= next_obstacle:
-                print(f"({self.player._name}) crashes into an obstacle and stops at {self.player.get_position()} units!")
+                self.player._position = next_obstacle - 1
+                print(f"({self.player._name}) crashes into an obstacle and stops at {self.player._position} units!")
             else:
+                self.player._position += movement
                 print(f"({self.player._name}) uses special move and travels {movement} units!")
 
         # Computer's Turn
@@ -88,8 +90,10 @@ class Race:
                 if random.random() < 0.2:  # 20% chance of special move
                     movement = opponent.special_move()
                     if movement >= next_obstacle:
-                        print(f"({opponent._name}) crashes into an obstacle and stops at {opponent.get_position()} units!")
+                        opponent._position = next_obstacle - 1
+                        print(f"({opponent._name}) crashes into an obstacle and stops at {opponent._position} units!")
                     else:
+                        opponent._position += movement
                         print(f"({opponent._name}) uses special move and travels {movement} units!")
                 elif random.random() < 0.7:  # 70% chance of fast move
                     result = opponent.fast(next_obstacle)

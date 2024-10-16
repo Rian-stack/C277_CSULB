@@ -47,9 +47,9 @@ class Vehicle(abc.ABC):
                 self._energy -= 5
                 return f"({self._name}) quickly moves {movement} units!"
             else:
-                self._position = dist  # Set position to the obstacle
+                self._position = dist - 1  # Set position to the space just before the obstacle
                 self._energy -= 5
-                return f"({self._name}) crashes into obstacle at {dist} units!"
+                return f"({self._name}) crashes into obstacle and stops at {self._position} units!"
         else:
             return f"({self._name}) does not have enough energy to move quickly!"
 
