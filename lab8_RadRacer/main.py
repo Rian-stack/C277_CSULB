@@ -82,15 +82,14 @@ class Race:
                         next_obstacle = i - opponent.position
                         break
 
-                if random.random() < 0.2:  # 20% chance of special move
-                    result = opponent.special_move(next_obstacle)
-                    print(result)
-                elif random.random() < 0.7:  # 70% chance of fast move
-                    result = opponent.fast(next_obstacle)
-                    print(result)
-                else:
+                move_choice = random.random()
+                if opponent.energy < 5 or move_choice < 0.4:  # 40% chance to go slow or if out of energy
                     result = opponent.slow(next_obstacle)
-                    print(result)
+                elif move_choice < 0.7:  # 30% chance to go fast
+                    result = opponent.fast(next_obstacle)
+                else:  # 30% chance to do special move
+                    result = opponent.special_move(next_obstacle)
+                print(result)
 
     def get_winner(self):
         return max(self.vehicles, key=lambda v: v.position)
