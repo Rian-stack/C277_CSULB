@@ -24,17 +24,19 @@ class RaceTrack:
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.get_position(), self.length - 1)
             # Add '*' for the previous position and save it on the track
-            if self.vehicle_positions[i] > 0 and self.track[i][self.vehicle_positions[i]] == '-':
+            if self.vehicle_positions[i] > 0 and self.vehicle_positions[i] < self.length and self.track[i][self.vehicle_positions[i]] == '-':
                 self.track[i][self.vehicle_positions[i]] = '*'
             # Place the vehicle on the track
-            self.track[i][pos] = 'P' if vehicle.get_initial() == 'P' else vehicle.get_initial()
+            if pos < self.length:
+                self.track[i][pos] = 'P' if vehicle.get_initial() == 'P' else vehicle.get_initial()
             self.vehicle_positions[i] = pos  # Update previous position
         for lane in self.track:
             print(''.join(lane))
         # Reset vehicle positions on the track to '-' or '*'
         for i, vehicle in enumerate(vehicles):
-            pos = vehicle.get_position()
-            self.track[i][pos] = '*' if self.track[i][pos] != '0' else '0'
+            pos = min(vehicle.get_position(), self.length - 1)
+            if pos < self.length:
+                self.track[i][pos] = '*' if self.track[i][pos] != '0' else '0'
 
     def is_obstacle_ahead(self, lane, position):
         return self.track[lane][position] == '0'
@@ -120,13 +122,18 @@ def main():
     track = RaceTrack()
     race = Race(player, vehicles, track)
 
-    while all(v.get_position() < track.length for v in vehicles):
+    while max(v.get_position() for v in vehicles) < track.length:
         print("\n" + str(c))
         print(str(m))
         print(str(t))
         track.display(vehicles)  # Display track at the beginning of each turn
         race.play_turn()
-        
+    
+    # Ensure all vehicles are at or past the finish line for the final display
+    for vehicle in vehicles:
+        if vehicle.get_position() < track.length:
+            vehicle._position = track.length
+    
     track.display(vehicles)  # Display final positions
     winner = race.get_winner()
     print(f"\nThe winner is {winner._name}!")
