@@ -1,6 +1,6 @@
 import car
 import motorcycle
-from truck import Truck
+import truck
 import check_input
 import random
 
@@ -38,7 +38,7 @@ def main():
 
     c = car.Car("Lightning car.Car", "C", 6, 8)
     m = motorcycle.Motorcycle("Swift Bike", "M", 6, 8)
-    t = Truck("Behemoth Truck", "T", 4, 8)
+    t = truck.Truck("Behemoth Truck", "T", 4, 8)
 
     vehicles = [c, m, t]
     player = vehicles[choice - 1]
@@ -66,7 +66,7 @@ def main():
         elif action == 2:
             result = player.slow(next_obstacle)
         else:
-            if isinstance(player, Truck):
+            if isinstance(player, t):
                 distance, smash = player.special_move()
                 if smash:
                     for i in range(player.get_position(), min(player.get_position() + distance, TRACK_LENGTH)):

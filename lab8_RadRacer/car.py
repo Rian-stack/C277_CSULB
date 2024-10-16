@@ -1,6 +1,6 @@
-from vehicle import Vehicle
+import vehicle
 
-class Car(Vehicle):
+class Car(vehicle.Vehicle):
     def __init__(self, name, initial, min_speed, max_speed):
         super().__init__(name, initial, min_speed, max_speed)
         self._nitro = 3
