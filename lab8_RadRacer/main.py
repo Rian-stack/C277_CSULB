@@ -10,6 +10,7 @@ class RaceTrack:
         self.lanes = lanes
         self.obstacle_chance = obstacle_chance
         self.track = self._create_track()
+        self.vehicle_positions = [0] * lanes  # Store previous positions
 
     def _create_track(self):
         track = [['-' for _ in range(self.length)] for _ in range(self.lanes)]
@@ -24,9 +25,10 @@ class RaceTrack:
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.get_position(), self.length - 1)
             display_track[i][pos] = 'P' if vehicle.get_initial() == 'P' else vehicle.get_initial()
-            # Add '*' for the previous position only
-            if pos > 0 and display_track[i][pos-1] == '-':
-                display_track[i][pos-1] = '*'
+            # Add '*' for the previous position
+            if self.vehicle_positions[i] > 0:
+                display_track[i][self.vehicle_positions[i]] = '*'
+            self.vehicle_positions[i] = pos  # Update previous position
         for lane in display_track:
             print(''.join(lane))
 
@@ -117,9 +119,10 @@ def main():
         print("\n" + str(c))
         print(str(m))
         print(str(t))
-        track.display(vehicles)
+        track.display(vehicles)  # Display track at the beginning of each turn
         race.play_turn()
-
+        
+    track.display(vehicles)  # Display final positions
     winner = race.get_winner()
     print(f"\nThe winner is {winner._name}!")
 
