@@ -20,9 +20,11 @@ def display_track(track, vehicles):
     display_track = [lane.copy() for lane in track]
     for i, vehicle in enumerate(vehicles):
         pos = min(vehicle.get_position(), TRACK_LENGTH - 1)
-        if pos > 0:
-            display_track[i][pos-1] = '*'  # Leave a '*' in the previous position
         display_track[i][pos] = 'P' if vehicle._initial == 'P' else vehicle._initial
+        # Add '*' for previous positions
+        for j in range(pos):
+            if display_track[i][j] == '-':
+                display_track[i][j] = '*'
     for lane in display_track:
         print(''.join(lane))
 
