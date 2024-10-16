@@ -19,8 +19,8 @@ class Motorcycle(vehicle.Vehicle):
         self._position += movement
         return f"({self._name}) goes around the obstacle and moves {movement} units!"
 
-    def description(self):
-        return f"Motorcycle: {self._name} - A speedy motorcycle ({self._min_speed}-{self._max_speed} units). Special: Agile Maneuvering (75% speed)"
+    def description_string(self):
+        return f"Motorcycle: {self._name} - A speedy motorcycle ({self._min_speed}-{self._max_speed} units). Special: Wheelie (2x speed but there's a chance you'll crash)"
 
     def special_move(self):
         """
