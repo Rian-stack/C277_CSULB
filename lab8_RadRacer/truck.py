@@ -13,7 +13,7 @@ class Truck(vehicle.Vehicle):
         Move the truck with a special ram action if there is sufficient energy.
 
         Args:
-            dist (int): The distance to the next obstacle.
+            dist (int): The distance to the next obstacle (ignored for truck's special move).
 
         Returns:
             str: A description of the event that occurred.
@@ -22,7 +22,7 @@ class Truck(vehicle.Vehicle):
             self._energy -= 15
             movement = 2 * random.randint(self._min_speed, self._max_speed)
             self._position += movement
-            return f"({self._name}) uses ram and travels {movement} units, removing all obstacles ahead!"
+            return f"({self._name}) uses ram and travels {movement} units, ignoring all obstacles!"
         else:
             return f"({self._name}) does not have enough energy to use ram!"
     

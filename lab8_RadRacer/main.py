@@ -71,10 +71,6 @@ class Race:
         else:
             result = self.player.special_move(next_obstacle)
             print(result)
-            
-            # Clear obstacles if it's a truck using special move
-            if isinstance(self.player, truck.Truck) and action == 3:
-                self.track.clear_obstacles(player_lane, self.player.position)
 
         # Computer's Turn
         for opponent in self.vehicles:
@@ -89,9 +85,6 @@ class Race:
                 if random.random() < 0.2:  # 20% chance of special move
                     result = opponent.special_move(next_obstacle)
                     print(result)
-                    if isinstance(opponent, truck.Truck):
-                        # Clear obstacles if it's a truck using special move
-                        self.track.clear_obstacles(opponent_lane, opponent.position)
                 elif random.random() < 0.7:  # 70% chance of fast move
                     result = opponent.fast(next_obstacle)
                     print(result)
