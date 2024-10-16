@@ -24,9 +24,10 @@ class RaceTrack:
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.get_position(), self.length - 1)
             display_track[i][pos] = 'P' if vehicle.get_initial() == 'P' else vehicle.get_initial()
-            # Add '*' for previous starting positions
-            if pos > 0:
-                display_track[i][0] = '*'
+            # Add '*' for all previous positions
+            for j in range(pos):
+                if display_track[i][j] == '-':
+                    display_track[i][j] = '*'
         for lane in display_track:
             print(''.join(lane))
 
