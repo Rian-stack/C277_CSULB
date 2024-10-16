@@ -69,19 +69,8 @@ class Race:
             result = self.player.slow(next_obstacle)
             print(result)
         else:
-            # truck's case, ignores obstacles
-            if isinstance(self.player, truck.Truck):
-                result = self.player.special_move(next_obstacle)
-                print(result)
-            # other vehicle's case
-            else:
-                movement = self.player.special_move()
-                if movement >= next_obstacle:
-                    self.player._position = next_obstacle - 1
-                    print(f"({self.player._name}) crashes into an obstacle and stops at {self.player._position} units!")
-                else:
-                    self.player._position += movement
-                    print(f"({self.player._name}) uses special move and travels {movement} units!")
+            result = self.player.special_move(next_obstacle)
+            print(result)
             
             # Clear obstacles if it's a truck
             if isinstance(self.player, truck.Truck):
