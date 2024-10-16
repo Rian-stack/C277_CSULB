@@ -1,6 +1,6 @@
 import car
 import motorcycle
-import truck
+from truck import Truck
 import check_input
 import random
 
