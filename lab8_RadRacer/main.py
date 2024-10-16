@@ -54,23 +54,29 @@ def main():
 
         # Player's turn
         action = check_input.get_int_range("Choose action (1. Fast, 2. Slow, 3. Special Move): ", 1, 3)
+        player_lane = vehicles.index(player)
+        next_obstacle = TRACK_LENGTH
+        for i in range(player.get_position() + 1, TRACK_LENGTH):
+            if track[player_lane][i] == '0':
+                next_obstacle = i - player.get_position()
+                break
+
         if action == 1:
-            distance = player.fast()
+            result = player.fast(next_obstacle)
         elif action == 2:
-            distance = player.slow()
+            result = player.slow(next_obstacle)
         else:
             if isinstance(player, Truck):
                 distance, smash = player.special_move()
                 if smash:
                     for i in range(player.get_position(), min(player.get_position() + distance, TRACK_LENGTH)):
-                        track[vehicles.index(player)][i] = '-'
+                        track[player_lane][i] = '-'
+                result = f"({player._name}) uses special move and travels {distance} units!"
             else:
                 distance = player.special_move()
+                result = f"({player._name}) uses special move and travels {distance} units!"
 
-        player_lane = vehicles.index(player)
-        if track[player_lane][min(player.get_position() + distance, TRACK_LENGTH - 1)] == '0' and action != 2:
-            print("You crashed into an obstacle!")
-            player._position -= distance // 2
+        print(result)
 
         # AI turns
         for opponent in vehicles:

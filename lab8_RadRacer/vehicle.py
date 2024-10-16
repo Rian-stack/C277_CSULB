@@ -59,17 +59,24 @@ class Vehicle(abc.ABC):
         self._position = 0
         self._energy = 100
 
-    def fast(self):
-        distance = random.randint(self._min_speed, self._max_speed)
-        self._position += distance
-        self._energy -= 5
-        return distance
-
-    def slow(self):
-        distance = self._min_speed // 2
-        self._position += distance
-        self._energy -= 1
-        return distance
+    def fast(self, dist):
+        if self._energy >= 5:
+            movement = random.randint(self._min_speed, self._max_speed)
+            if movement < dist:
+                self._position += movement
+                self._energy -= 5
+                return f"({self._name}) quickly moves {movement} units!"
+            else:
+                self._position += dist - 1
+                self._energy -= 5
+                return f"({self._name}) crashes into obstacle at {dist} units!"
+        else:
+            return f"({self._name}) does not have enough energy to move quickly!"
+    
+    def slow(self, dist):
+        movement = min(self._min_speed // 2, dist)
+        self._position += movement
+        return f"({self._name}) slowly moves {movement} units!"
 
     @abc.abstractmethod
     def special_move(self):
