@@ -61,10 +61,13 @@ def main():
         elif action == 2:
             result = player.slow(distance_to_obstacle)
         else:
-            distance = player.special_move()
             if isinstance(player, truck.Truck):
-                for i in range(player.get_position(), min(player.get_position() + distance, TRACK_LENGTH)):
-                    track[player_lane][i] = '-'
+                distance, smash = player.special_move()
+                if smash:
+                    for i in range(player.get_position(), min(player.get_position() + distance, TRACK_LENGTH)):
+                        track[player_lane][i] = '-'
+            else:
+                distance = player.special_move()
             result = f"({player._name}) uses special move and travels {distance} units!"
 
         print(result)
@@ -77,10 +80,13 @@ def main():
                 distance_to_obstacle = next_obstacle - opponent.get_position()
 
                 if random.random() < 0.2:  # 20% chance of special move
-                    distance = opponent.special_move()
                     if isinstance(opponent, truck.Truck):
-                        for i in range(opponent.get_position(), min(opponent.get_position() + distance, TRACK_LENGTH)):
-                            track[opponent_lane][i] = '-'
+                        distance, smash = opponent.special_move()
+                        if smash:
+                            for i in range(opponent.get_position(), min(opponent.get_position() + distance, TRACK_LENGTH)):
+                                track[opponent_lane][i] = '-'
+                    else:
+                        distance = opponent.special_move()
                 elif random.random() < 0.7:  # 70% chance of fast move
                     opponent.fast(distance_to_obstacle)
                 else:
