@@ -68,20 +68,23 @@ class RaceTrack:
         Args:
             vehicles (list): A list of Vehicle objects representing the racers.
         """
+        # Create a temporary track for display
+        display_track = [lane[:] for lane in self.track]
+
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.position, self.length - 1)
             # Add '*' for all previous positions
-            for j in range(1, pos):
-                if self.track[i][j] == '-':
-                    self.track[i][j] = '*'
+            for j in range(self.vehicle_positions[i] + 1, pos):
+                if display_track[i][j] == '-':
+                    display_track[i][j] = '*'
             # Place the vehicle on the track
-            self.track[i][pos] = vehicle.initial
-        for lane in self.track:
+            display_track[i][pos] = vehicle.initial
+            # Update the vehicle's previous position
+            self.vehicle_positions[i] = pos
+
+        # Print the track
+        for lane in display_track:
             print(''.join(lane))
-        # Reset vehicle positions on the track to '*' or '0'
-        for i, vehicle in enumerate(vehicles):
-            pos = min(vehicle.position, self.length - 1)
-            self.track[i][pos] = '*' if self.track[i][pos] != '0' else '0'
 
     def is_obstacle_ahead(self, lane, position):
         """
@@ -208,16 +211,20 @@ def main():
     race = Race(player, vehicles, track)
 
     # Main game loop
-    while all(v.position < track.length for v in vehicles):
+    race_finished = False
+    while not race_finished:
         track.display(vehicles)
         print("\nCurrent standings:")
         for v in vehicles:
             print(v)
-        race.play_turn()
-        print("\n" + "="*50 + "\n")
+        
+        if all(v.position >= track.length for v in vehicles):
+            race_finished = True
+        else:
+            race.play_turn()
+            print("\n" + "="*50 + "\n")
 
     # Display final results
-    track.display(vehicles)
     winner = race.get_winner()
     print(f"\nThe winner is {winner._name}!")
 main()
