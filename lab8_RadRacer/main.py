@@ -161,7 +161,7 @@ class Race:
         for opponent in self.vehicles:
             if opponent != self.player and opponent.position < self.track.length:
                 opponent_lane = self.vehicles.index(opponent)
-                next_obstacle = self.track.length
+                next_obstacle = None
                 for i in range(opponent.position + 1, self.track.length):
                     if self.track.is_obstacle_ahead(opponent_lane, i):
                         next_obstacle = i - opponent.position
@@ -169,11 +169,11 @@ class Race:
 
                 move_choice = random.random()
                 if opponent.energy < 5 or move_choice < 0.4:  # 40% chance to go slow or if out of energy
-                    result = opponent.slow(None)  # Allow moving past finish line
+                    result = opponent.slow(next_obstacle)
                 elif move_choice < 0.7:  # 30% chance to go fast
-                    result = opponent.fast(None)  # Allow moving past finish line
+                    result = opponent.fast(next_obstacle)
                 else:  # 30% chance to do special move
-                    result = opponent.special_move(None)  # Allow moving past finish line
+                    result = opponent.special_move(next_obstacle)
                 print(result)
 
     def get_winner(self):

@@ -26,7 +26,7 @@ class Truck(vehicle.Vehicle):
         Move the truck with a special ram action if there is sufficient energy.
 
         Args:
-            dist (int): The distance to the next obstacle (ignored for truck's special move).
+            dist (int or None): The distance to the next obstacle (ignored for truck's special move).
 
         Returns:
             str: A description of the event that occurred.

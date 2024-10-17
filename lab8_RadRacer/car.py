@@ -34,13 +34,17 @@ class Car(vehicle.Vehicle):
         if self._energy >= 15:
             self._energy -= 15
             movement = int(1.5 * random.randint(self._min_speed, self._max_speed))
-            if dist is not None and movement >= dist:
-                # Car crashes into the obstacle
-                self._position += (dist - 1)
-                return f"({self._name}) crashes into an obstacle and stops at {self._position} units!"
+            if dist is not None:
+                if movement >= dist:
+                    # Car crashes into the obstacle
+                    self._position += (dist - 1)
+                    return f"({self._name}) crashes into an obstacle and stops at {self._position} units!"
+                else:
+                    # Car moves normally
+                    self._position += movement
             else:
-                # Car moves normally
+                # No obstacle, car moves normally
                 self._position += movement
-                return f"({self._name}) boosts forward and moves {movement} units!"
+            return f"({self._name}) boosts forward and moves {movement} units!"
         else:
             return f"({self._name}) does not have enough energy to boost!"

@@ -43,7 +43,7 @@ class Motorcycle(vehicle.Vehicle):
         Move the motorcycle with a special Wheelie action if there is sufficient energy.
 
         Args:
-            dist (int): The distance to the next obstacle.
+            dist (int or None): The distance to the next obstacle. If None, allow moving past finish line.
 
         Returns:
             str: A description of the movement or the reason for not moving.
@@ -53,12 +53,16 @@ class Motorcycle(vehicle.Vehicle):
             # 75% chance to move at 2x speed
             if random.random() < 0.75:
                 movement = 2 * random.randint(self._min_speed, self._max_speed)
-                if movement >= dist:
-                    self._position += (dist - 1)
-                    return f"({self._name}) crashes into an obstacle and stops at {self._position} units!"
+                if dist is not None:
+                    if movement >= dist:
+                        self._position += (dist - 1)
+                        return f"({self._name}) crashes into an obstacle and stops at {self._position} units!"
+                    else:
+                        self._position += movement
                 else:
+                    # No obstacle, motorcycle moves normally
                     self._position += movement
-                    return f"({self._name}) performs a wheelie and moves {movement} units!"
+                return f"({self._name}) performs a wheelie and moves {movement} units!"
             else:
                 # Motorcycle fails to speed and moves 1 unit
                 self._position += 1
