@@ -9,14 +9,14 @@ import random
 Written by: Sena Matsuzoe, Rianne Papa
 Date: 10/16/2024
 
-This program is a racing game where the user may pick between three different vehicles: car, motorcycle, or truck. 
-Each vehicle has the option to go fast, slow, or use its special move. They have unique speeds and abilities.
-There will be three tracks for each vehicle, each with two obstacles in the path. 
-If the vehicle is going fast, then it may crash into it, if they are going slow, then it can go around
-the obstacle. The special moves are “Nitro Boost” for the car, which makes the car go 1.5x
-faster, “Wheelie” for the motorcycle, which makes it go 2x faster, but has a chance of crashing,
-and “Ram” for the truck, which makes it go 2x faster and also allows it to bash through an
-obstacle. Whichever vehicle reaches the finish first wins the race.
+A racing game featuring three vehicle types: car, motorcycle, and truck. Players navigate a track with obstacles, choosing between fast, slow, or special moves. Each vehicle has unique 
+abilities:
+
+- Car: Nitro Boost (1.5x speed) 
+- Motorcycle: Wheelie (2x speed, risk of crashing)
+- Truck: Ram (2x speed, smashes obstacles)
+
+The first vehicle to reach the finish line wins.
 
 """
 
