@@ -22,7 +22,7 @@ The first vehicle to reach the finish line wins.
 
 class RaceTrack:
     """
-    Represents the race track for the game.
+    Generates race track and obstacles.
 
     Attributes:
         length (int): The length of the track.
@@ -112,7 +112,7 @@ class RaceTrack:
 
 class Race:
     """
-    Represents a race in the game.
+    Racing logic for game.
 
     Attributes:
         player (Vehicle): The player's vehicle.
