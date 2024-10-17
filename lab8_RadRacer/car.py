@@ -26,7 +26,7 @@ class Car(vehicle.Vehicle):
         Move the car with a special Nitro Boost action if there is sufficient energy.
 
         Args:
-            dist (int): The distance to the next obstacle.
+            dist (int or None): The distance to the next obstacle. If None, allow moving past finish line.
 
         Returns:
             str: A description of the movement or the reason for not moving.
@@ -34,7 +34,7 @@ class Car(vehicle.Vehicle):
         if self._energy >= 15:
             self._energy -= 15
             movement = int(1.5 * random.randint(self._min_speed, self._max_speed))
-            if movement >= dist:
+            if dist is not None and movement >= dist:
                 # Car crashes into the obstacle
                 self._position += (dist - 1)
                 return f"({self._name}) crashes into an obstacle and stops at {self._position} units!"

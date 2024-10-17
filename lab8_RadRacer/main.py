@@ -148,13 +148,13 @@ class Race:
                     break
 
             if action == 1:
-                result = self.player.fast(None)  # Allow moving past finish line
+                result = self.player.fast(next_obstacle)
                 print(result)
             elif action == 2:
-                result = self.player.slow(None)  # Allow moving past finish line
+                result = self.player.slow(next_obstacle)
                 print(result)
             else:
-                result = self.player.special_move(None)  # Allow moving past finish line
+                result = self.player.special_move(next_obstacle)
                 print(result)
 
         # Computer's Turn
