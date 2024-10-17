@@ -4,6 +4,22 @@ import truck
 import check_input
 import random
 
+""" Rad Racer Game
+
+Written by: Sena Matsuzoe, Rianne Papa
+Date: 10/16/2024
+
+This program is a racing game where the user may pick between three different vehicles: car, motorcycle, or truck. 
+Each vehicle has the option to go fast, slow, or use its special move. They have unique speeds and abilities.
+There will be three tracks for each vehicle, each with two obstacles in the path. 
+If the vehicle is going fast, then it may crash into it, if they are going slow, then it can go around
+the obstacle. The special moves are “Nitro Boost” for the car, which makes the car go 1.5x
+faster, “Wheelie” for the motorcycle, which makes it go 2x faster, but has a chance of crashing,
+and “Ram” for the truck, which makes it go 2x faster and also allows it to bash through an
+obstacle. Whichever vehicle reaches the finish first wins the race.
+
+"""
+
 class RaceTrack:
     """
     Represents the race track for the game.
@@ -206,6 +222,4 @@ def main():
     track.display(vehicles)
     winner = race.get_winner()
     print(f"\nThe winner is {winner._name}!")
-
-if __name__ == "__main__":
-    main()
+main()
