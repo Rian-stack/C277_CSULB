@@ -138,27 +138,28 @@ class Race:
         Play a single turn of the race, including the player's turn and the computer-controlled vehicles' turns.
         """
         # Player's turn
-        action = check_input.get_int_range("Choose action (1. Fast, 2. Slow, 3. Special Move): ", 1, 3)
-        player_lane = self.vehicles.index(self.player)
-        next_obstacle = self.track.length
-        for i in range(self.player.position + 1, self.track.length):
-            if self.track.is_obstacle_ahead(player_lane, i):
-                next_obstacle = i - self.player.position
-                break
+        if self.player.position < self.track.length:
+            action = check_input.get_int_range("Choose action (1. Fast, 2. Slow, 3. Special Move): ", 1, 3)
+            player_lane = self.vehicles.index(self.player)
+            next_obstacle = self.track.length
+            for i in range(self.player.position + 1, self.track.length):
+                if self.track.is_obstacle_ahead(player_lane, i):
+                    next_obstacle = i - self.player.position
+                    break
 
-        if action == 1:
-            result = self.player.fast(next_obstacle)
-            print(result)
-        elif action == 2:
-            result = self.player.slow(next_obstacle)
-            print(result)
-        else:
-            result = self.player.special_move(next_obstacle)
-            print(result)
+            if action == 1:
+                result = self.player.fast(None)  # Allow moving past finish line
+                print(result)
+            elif action == 2:
+                result = self.player.slow(None)  # Allow moving past finish line
+                print(result)
+            else:
+                result = self.player.special_move(None)  # Allow moving past finish line
+                print(result)
 
         # Computer's Turn
         for opponent in self.vehicles:
-            if opponent != self.player:
+            if opponent != self.player and opponent.position < self.track.length:
                 opponent_lane = self.vehicles.index(opponent)
                 next_obstacle = self.track.length
                 for i in range(opponent.position + 1, self.track.length):
@@ -168,11 +169,11 @@ class Race:
 
                 move_choice = random.random()
                 if opponent.energy < 5 or move_choice < 0.4:  # 40% chance to go slow or if out of energy
-                    result = opponent.slow(next_obstacle)
+                    result = opponent.slow(None)  # Allow moving past finish line
                 elif move_choice < 0.7:  # 30% chance to go fast
-                    result = opponent.fast(next_obstacle)
+                    result = opponent.fast(None)  # Allow moving past finish line
                 else:  # 30% chance to do special move
-                    result = opponent.special_move(next_obstacle)
+                    result = opponent.special_move(None)  # Allow moving past finish line
                 print(result)
 
     def get_winner(self):
@@ -210,7 +211,7 @@ def main():
     race = Race(player, vehicles, track)
 
     # Main game loop
-    while all(v.position < track.length for v in vehicles):
+    while any(v.position < track.length for v in vehicles):
         track.display(vehicles)
         print("\nCurrent standings:")
         for v in vehicles:
@@ -221,6 +222,9 @@ def main():
     # Display final results
     track.display(vehicles)
     winner = race.get_winner()
+    print("\nFinal standings:")
+    for i, v in enumerate(sorted(vehicles, key=lambda x: x.position, reverse=True), 1):
+        print(f"{i}st place: {v}")
     print(f"\nThe winner is {winner._name}!")
 
 if __name__ == "__main__":

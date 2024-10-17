@@ -66,7 +66,7 @@ class Vehicle(abc.ABC):
         Move the vehicle quickly, consuming 5 energy.
 
         Args:
-            dist (int): The distance to the next obstacle.
+            dist (int): The distance to the next obstacle. If None, allow moving past finish line.
 
         Returns:
             str: A description of the movement.
@@ -89,12 +89,12 @@ class Vehicle(abc.ABC):
         Move the vehicle slowly, without consuming energy.
 
         Args:
-            dist (int): The distance to the next obstacle.
+            dist (int): The distance to the next obstacle. If None, allow moving past finish line.
 
         Returns:
             str: A description of the movement.
         """
-        movement = min(self._min_speed // 2, dist)
+        movement = self._min_speed // 2 if dist is None else min(self._min_speed // 2, dist)
         self.position += movement
         return f"({self._name}) slowly moves {movement} units!"
     
