@@ -18,14 +18,16 @@ class Motorcycle(vehicle.Vehicle):
         Move the motorcycle slowly at 75% speed, without consuming energy.
 
         Args:
-            dist (int): The distance to the next obstacle.
+            dist (int or None): The distance to the next obstacle. If None, allow moving past finish line.
 
         Returns:
             str: A description of the movement.
         """
-        movement = min(int(0.75 * self._min_speed), dist)
+        movement = int(0.75 * self._min_speed)
+        if dist is not None:
+            movement = min(movement, dist)
         self._position += movement
-        return f"({self._name}) goes around the obstacle and moves {movement} units!"
+        return f"({self._name}) moves slowly and travels {movement} units!"
 
     def description_string(self):
         """
