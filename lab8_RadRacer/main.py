@@ -70,20 +70,18 @@ class RaceTrack:
         """
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.position, self.length - 1)
-            # Add '*' for the previous position and save it on the track
-            if self.vehicle_positions[i] > 0 and self.vehicle_positions[i] < self.length and self.track[i][self.vehicle_positions[i]] == '-':
-                self.track[i][self.vehicle_positions[i]] = '*'
+            # Add '*' for all previous positions
+            for j in range(1, pos):
+                if self.track[i][j] == '-':
+                    self.track[i][j] = '*'
             # Place the vehicle on the track
-            if pos < self.length:
-                self.track[i][pos] = 'P' if vehicle.initial == 'P' else vehicle.initial
-            self.vehicle_positions[i] = pos  # Update previous position
+            self.track[i][pos] = vehicle.initial
         for lane in self.track:
             print(''.join(lane))
-        # Reset vehicle positions on the track to '-' or '*'
+        # Reset vehicle positions on the track to '*' or '0'
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.position, self.length - 1)
-            if pos < self.length:
-                self.track[i][pos] = '*' if self.track[i][pos] != '0' else '0'
+            self.track[i][pos] = '*' if self.track[i][pos] != '0' else '0'
 
     def is_obstacle_ahead(self, lane, position):
         """
