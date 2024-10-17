@@ -21,92 +21,32 @@ obstacle. Whichever vehicle reaches the finish first wins the race.
 """
 
 class RaceTrack:
-    """
-    Represents the race track for the game.
-
-    Attributes:
-        length (int): The length of the track.
-        lanes (int): The number of lanes on the track.
-        obstacle_chance (float): The probability of placing an obstacle on each track position.
-        track (list): A 2D list representing the track layout.
-        vehicle_positions (list): A list to store the previous positions of vehicles.
-    """
-
     def __init__(self, length=100, lanes=3, obstacle_chance=0.2):
-        """
-        Initialize a new RaceTrack instance.
-
-        Args:
-            length (int, optional): The length of the track. Defaults to 100.
-            lanes (int, optional): The number of lanes on the track. Defaults to 3.
-            obstacle_chance (float, optional): The probability of placing an obstacle. Defaults to 0.2.
-        """
         self.length = length
         self.lanes = lanes
         self.obstacle_chance = obstacle_chance
         self.track = self._create_track()
-        self.vehicle_positions = [0] * lanes  # Store previous positions
 
     def _create_track(self):
-        """
-        Create the initial track layout with obstacles.
-
-        Returns:
-            list: A 2D list representing the track layout.
-        """
         track = [['-' for _ in range(self.length)] for _ in range(self.lanes)]
         for lane in track:
-            obstacle_positions = random.sample(range(1, self.length - 1), 2)  # Exclude start and finish
-            for pos in obstacle_positions:
-                lane[pos] = '0'
+            for i in range(self.length):
+                if random.random() < self.obstacle_chance:
+                    lane[i] = '0'
         return track
 
     def display(self, vehicles):
-        """
-        Display the current state of the race track.
-
-        Args:
-            vehicles (list): A list of Vehicle objects representing the racers.
-        """
-        # Create a temporary track for display
         display_track = [lane[:] for lane in self.track]
-
         for i, vehicle in enumerate(vehicles):
             pos = min(vehicle.position, self.length - 1)
-            # Add '*' for all previous positions
-            for j in range(self.vehicle_positions[i] + 1, pos):
-                if display_track[i][j] == '-':
-                    display_track[i][j] = '*'
-            # Place the vehicle on the track
             display_track[i][pos] = vehicle.initial
-            # Update the vehicle's previous position
-            self.vehicle_positions[i] = pos
-
-        # Print the track
         for lane in display_track:
             print(''.join(lane))
 
     def is_obstacle_ahead(self, lane, position):
-        """
-        Check if there's an obstacle ahead at the given lane and position.
-
-        Args:
-            lane (int): The lane number to check.
-            position (int): The position to check.
-
-        Returns:
-            bool: True if there's an obstacle, False otherwise.
-        """
         return self.track[lane][position] == '0'
 
     def clear_obstacles(self, lane, start_pos):
-        """
-        Clear obstacles from the given lane starting from the start_pos.
-
-        Args:
-            lane (int): The lane number to clear obstacles from.
-            start_pos (int): The starting position to clear obstacles from.
-        """
         for i in range(start_pos, self.length):
             if self.track[lane][i] == '0':
                 self.track[lane][i] = '-'

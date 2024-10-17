@@ -21,12 +21,9 @@ class Truck(vehicle.Vehicle):
         """
         return f"Truck: {self._name} - A powerful truck ({self._min_speed}-{self._max_speed} units). Special: Ram (2x speed and it smashes through obstacles)"
     
-    def special_move(self, dist):
+    def special_move(self):
         """
         Move the truck with a special ram action if there is sufficient energy.
-
-        Args:
-            dist (int): The distance to the next obstacle (ignored for truck's special move).
 
         Returns:
             str: A description of the event that occurred.
