@@ -9,8 +9,16 @@ class Entity(abc.ABC):
         3. take_damage(self, dmg) – the damage the entity takes. Subtract the dmg value from
         the entity’s _hp. Do not let the hp go past 0 (if it’s a negative value, reset it to 0).
         4. __str__(self) – return the entity’s name and hp in the format “Name: hp/max_hp”.
-        5. Abstract methods basic_attack and special_attack. No code
+        5. Abstract methods basic_attack and special_attack.
     '''
+    @abc.abstractmethod
+    def basic_attack(self, opponent):
+        pass
+
+    @abc.abstractmethod
+    def special_attack(self, opponent):
+        pass
+
     def __init__(self, name, max_hp):
         self._name = name
         self._max_hp = max_hp
