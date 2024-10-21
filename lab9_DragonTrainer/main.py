@@ -1,5 +1,6 @@
 import random
 import entity
+import check_input
 from dragon import Dragon
 from hero import Hero
 
@@ -11,14 +12,11 @@ def main():
         print(f"\n{dragon}")
         print(f"{hero}\n")
 
-        attack_choice = input("Choose your attack (1 for basic, 2 for special): ")
-        if attack_choice == '1':
+        attack_choice = check_input.get_int_range("Choose your attack (1 for basic, 2 for special): ", 1, 2)
+        if attack_choice == 1:
             print(hero.basic_attack(dragon))
-        elif attack_choice == '2':
+        elif attack_choice == 2:
             print(hero.special_attack(dragon))
-        else:
-            print("Invalid input. Please enter 1 or 2.")
-            continue
 
         if dragon.is_alive() and dragon._special_attacks > 0:
             print(dragon.basic_attack(hero))
