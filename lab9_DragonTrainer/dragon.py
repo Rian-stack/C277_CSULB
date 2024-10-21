@@ -10,7 +10,9 @@ class Dragon(entity.Entity):
         3. basic_attack(self, opponent) – tail attack – the hero takes a random amount of
         damage in the range 3-7. Return a string with the description of the attack and the
         damage dealt to the hero.
-        4. __str__(self) – use super to get the __str__ from the entity class, then concatenate on
+        4. special_attack(self, opponent) - call decrement special attacks. This method
+        will be overridden in the subclasses.
+        5. __str__(self) – use super to get the __str__ from the entity class, then concatenate on
         the number of special attacks remaining.
     '''
     def __init__(self, name, max_hp, num_sp):
@@ -25,7 +27,11 @@ class Dragon(entity.Entity):
     def basic_attack(self, opponent):
         damage = random.randint(3, 7)
         opponent.take_damage(damage)
-        return f"{self.get_name()} attacks with a TAIL WHIP for {damage} damage."
+        return f"{self.name} attacks with a TAIL WHIP for {damage} damage."
+    
+    @abc.abstractmethod
+    def special_attack(self, opponent):
+        self.decrement_special_attacks()
     
     def __str__(self):
         return super().__str__() + f" Special Attacks: {self._special_attacks}"
