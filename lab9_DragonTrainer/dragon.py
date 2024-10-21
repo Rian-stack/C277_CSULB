@@ -13,13 +13,19 @@ class Dragon(entity.Entity):
         the number of special attacks remaining.
     '''
     def __init__(self, name, max_hp, num_sp):
-        return 0
+        super().__init__(name, max_hp)
+        self._special_attacks = num_sp
     
     def decrement_special_attacks(self):
-        return 0
+        self._special_attacks -= 1
+        if self._special_attacks < 0:
+            self._special_attacks = 0
     
     def basic_attack(self, opponent):
-        return 0
+        import random
+        damage = random.randint(3, 7)
+        opponent.take_damage(damage)
+        return f"{self.get_name()} attacks with a TAIL WHIP for {damage} damage."
     
     def __str__(self):
-        return 0
+        return super().__str__() + f" Special Attacks: {self._special_attacks}"
