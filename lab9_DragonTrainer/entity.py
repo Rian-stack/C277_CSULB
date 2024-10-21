@@ -24,3 +24,9 @@ class Entity(abc.ABC):
     def __str__(self):
         return f"{self._name}: {self._hp}/{self._max_hp}" 
     
+    def get_name(self):                                                                                                                                                
+         return self._name                                                                                                                                              
+                                                                                                                                                                        
+    def is_alive(self):                                                                                                                                                
+         return self._hp > 0 
+    
