@@ -37,6 +37,6 @@ class Entity(abc.ABC):
          return self._name                                                                                                                                              
                                                                                                                                                                         
     @property
-    def is_alive(self):                                                                                                                                                
-         return self._hp > 0 
+    def hp(self):                                                                                                                                                
+         return self._hp
     
