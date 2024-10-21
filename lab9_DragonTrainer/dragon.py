@@ -1,4 +1,5 @@
 import entity
+import random
 
 class Dragon(entity.Entity):
     '''
@@ -22,7 +23,6 @@ class Dragon(entity.Entity):
             self._special_attacks = 0
     
     def basic_attack(self, opponent):
-        import random
         damage = random.randint(3, 7)
         opponent.take_damage(damage)
         return f"{self.get_name()} attacks with a TAIL WHIP for {damage} damage."
