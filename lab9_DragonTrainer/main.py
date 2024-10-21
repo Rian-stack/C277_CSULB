@@ -4,8 +4,8 @@ from dragon import Dragon
 from hero import Hero
 
 def main():
-    dragon = Dragon("Smaug", 100, 3)
-    hero = Hero("Bard", 50)
+    dragon = Dragon("Gronkle", 100, 3)
+    hero = Hero("Astrid", 50)
 
     while dragon.is_alive() and hero.is_alive():
         print(f"\n{dragon}")
@@ -31,4 +31,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
