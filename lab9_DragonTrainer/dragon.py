@@ -1,5 +1,6 @@
 import entity
 import random
+import abc
 
 class Dragon(entity.Entity):
     '''
