@@ -1,42 +1,68 @@
 import abc
 
 class Entity(abc.ABC):
-    '''
-    Entity Class (entity.py) – abstract class
-        1. __init__(self, name, max_hp) – set the _name, _max_hp, and _hp. Assign the
-        max_hp value to both the _max_hp and _hp attributes.
-        2. name and hp properties – use decorators to get (not set) the values of _name and _hp.
-        3. take_damage(self, dmg) – the damage the entity takes. Subtract the dmg value from
-        the entity’s _hp. Do not let the hp go past 0 (if it’s a negative value, reset it to 0).
-        4. __str__(self) – return the entity’s name and hp in the format “Name: hp/max_hp”.
-        5. Abstract methods basic_attack and special_attack.
-    '''
-    @abc.abstractmethod
-    def basic_attack(self, opponent):
-        pass
+  """
+  Abstract class for class Hero and Dragon
 
-    @abc.abstractmethod
-    def special_attack(self, opponent):
-        pass
+  Attributes:
+      <<get>> _name (string): name of any entity 
+      <<get>> _hp (int): hp of entity
+      _max_hp (int): maximum hp of entity
+  """
+  def __init__(self, name, max_hp):
+    """
+    set attribute, name, max_hp, and initial hp
 
-    def __init__(self, name, max_hp):
-        self._name = name
-        self._max_hp = max_hp
-        self._hp = max_hp
+    Args:
+        name and max_hp to set name of entity, and hp & max_hp
+
+    """
+    self._name = name
+    self._max_hp = max_hp
+    self._hp = max_hp
+
+  def take_damege(self, damege):
+    """
+    calculate damege and hp.
+
+    Args:
+        given damege to calculate remaining hp.
+
+    Return: damege(int) that this entity took
+    """
+    self._hp = self._hp - damege
+    if self._hp < 0:
+      self._hp = 0
+    return damege
+
+  @property
+  def name(self):
+    return self._name
+  @property
+  def hp(self):
+    return self._hp
+  
+  def __str__(self):
+    """
+    return the entity’s name and hp
     
-    def take_damage(self, dmg):
-        self._hp -= dmg                                                                                                                                                
-        if self._hp < 0:                                                                                                                                               
-             self._hp = 0     
+    Return: entity’s name and hp in the format “Name: hp/max_hp”.
+    """
+    return self._name + ': '  + str(self._hp) + "/" +  str(self._max_hp)
+
+  @abc.abstractmethod
+  
+  def basic_attack(self, opponent):
+    """
+    abstract function that need to be overridden
     
-    def __str__(self):
-        return f"{self._name}: {self._hp}/{self._max_hp}" 
-    
-    @property
-    def name(self):                                                                                                                                                
-         return self._name                                                                                                                                              
-                                                                                                                                                                        
-    @property
-    def hp(self):                                                                                                                                                
-         return self._hp
-    
+    Args:
+         opponent that take damege
+    Return: 
+         entity’s name and hp in the format “Name: hp/max_hp”.
+    """
+    pass
+  
+  @abc.abstractmethod
+  def special_attack(self, opponent):
+    pass
