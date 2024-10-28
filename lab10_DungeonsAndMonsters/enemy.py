@@ -1,4 +1,5 @@
 import entity 
+import random
 
 class Enemy(entity.Entity):
     '''Enemy – extends entity - monster character that the hero encounters in the maze.
