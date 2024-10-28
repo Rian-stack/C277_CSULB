@@ -14,3 +14,23 @@ class Entity(abc.ABC):
     def __init__(self, name, max_hp):
         self._name = name
         self._max_hp = max_hp
+        self._hp = max_hp
+
+    def take_damage(self, dmg):
+        '''Method to reduce hp by dmg taken'''
+        self._hp -= dmg
+        if self._hp < 0:
+            self._hp = 0
+
+    def heal(self):
+        '''Method to reset hp to max_hp'''
+        self._hp = self._max_hp
+
+    def __str__(self):
+        '''Method to return a formatted string of the entity'''
+        return f'{self._name}\nHP: {self._hp}/{self._max_hp}'
+
+    @abc.abstractmethod
+    def attack(self, entity):
+        '''Abstract method to attack another entity'''
+        pass
