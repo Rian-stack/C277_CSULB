@@ -21,3 +21,45 @@ class Map:
         g. remove_at_loc(self, loc) – overwrites the character in the map list at the specified
         location with an ‘n’.
     '''
+    _instance = None
+
+    def __new__(cls):
+        if not cls._instance:
+            cls._instance = super(Map, cls).__new__(cls)
+        return cls._instance
+
+    def __init__(self):
+        if not hasattr(self, 'map'):
+            self._map = []
+            with open('map.txt') as f:
+                for line in f:
+                    self._map.append(list(line.strip()))
+            self._revealed = [[False for _ in range(len(self._map[0]))] for _ in range(len(self._map))]
+
+    def __getitem__(self, row):
+        return self._map[row]
+
+    def __len__(self):
+        return len(self._map)
+
+    def show_map(self, loc):
+        '''Returns a string representation of the map, revealing only explored areas and the hero's location.'''
+        map_str = ''
+        for row in range(len(self._map)):
+            for col in range(len(self._map[0])):
+                if row == loc[0] and col == loc[1]:
+                    map_str += '*'
+                elif self._revealed[row][col]:
+                    map_str += self._map[row][col]
+                else:
+                    map_str += 'x'
+            map_str += '\n'
+        return map_str
+
+    def reveal(self, loc):
+        '''Reveals the map at the given location.'''
+        self._revealed[loc[0]][loc[1]] = True
+
+    def remove_at_loc(self, loc):
+        '''Removes an item from the map at the given location.'''
+        self._map[loc[0]][loc[1]] = 'n'
