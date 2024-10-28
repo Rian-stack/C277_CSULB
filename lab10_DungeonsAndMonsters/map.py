@@ -22,17 +22,18 @@ class Map:
         location with an ‘n’.
     '''
     _instance = None
+    _initialized = False
 
     def __new__(cls):
-        if not cls._instance:
+        if cls._instance is None:
             cls._instance = super(Map, cls).__new__(cls)
         return cls._instance
 
     def __init__(self):
         if not hasattr(self, 'map'):
             self._map = []
-            with open('map.txt') as f:
-                for line in f:
+            with open('map_lab10.txt') as file:
+                for line in file:
                     self._map.append(list(line.strip()))
             self._revealed = [[False for _ in range(len(self._map[0]))] for _ in range(len(self._map))]
 
