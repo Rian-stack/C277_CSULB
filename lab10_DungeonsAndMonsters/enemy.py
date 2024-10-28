@@ -8,6 +8,15 @@ class Enemy(entity.Entity):
         The hero should take the damage and the method should return a string
         representing the event.
     '''
+    _monsters = ['Goblin', 'Vampire', 'Ghoul', 'Skeleton', 'Zombie']
+
     def __init__(self):
-        self._monsters = monsters
-        monsters = []
+        name = random.choice(self._monsters)
+        hp = random.randint(4, 8)
+        super().__init__(name, hp)
+
+    def attack(self, entity):
+        '''Attack the hero, dealing random damage between 1 and 4.'''
+        damage = random.randint(1, 4)
+        entity.take_damage(damage)
+        return f'{self._name} attacks {entity._name} for {damage} damage.'
