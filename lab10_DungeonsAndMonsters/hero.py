@@ -14,4 +14,42 @@ class Hero(entity.Entity):
         location, if it isn’t, return an ‘o’ to signify that the direction is out of bounds.
     '''
     def __init__(self, name):
-        super.__init__(name)
+        '''Initialize the Hero, setting its name, max HP, and starting location.'''
+        super().__init__(name, 25)
+        self._row = 0
+        self._col = 0
+
+    def attack(self, entity):
+        '''Attack an entity, dealing random damage between 2 and 5.'''
+        from random import randint
+        damage = randint(2, 5)
+        entity.take_damage(damage)
+        return f'{self._name} attacks {entity._name} for {damage} damage.'
+
+    def go_north(self):
+        '''Move the hero one step north if possible.'''
+        if self._row > 0:
+            self._row -= 1
+            return 'n'
+        return 'o'
+
+    def go_south(self):
+        '''Move the hero one step south if possible.'''
+        if self._row < 9:
+            self._row += 1
+            return 's'
+        return 'o'
+
+    def go_east(self):
+        '''Move the hero one step east if possible.'''
+        if self._col < 9:
+            self._col += 1
+            return 'e'
+        return 'o'
+
+    def go_west(self):
+        '''Move the hero one step west if possible.'''
+        if self._col > 0:
+            self._col -= 1
+            return 'w'
+        return 'o'
