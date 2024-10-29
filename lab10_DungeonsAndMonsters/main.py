@@ -21,8 +21,95 @@
         f. ‘f’ – finish – display a congratulatory message stating that they found the way out
         of the maze and won the game.
 '''
+import random
+from hero import Hero
+from map import Map
+from enemy import Enemy
 
 def main():
-    print()
+    name = input("Enter your hero's name: ")
+    hero = Hero(name)
+    game_map = Map()
+
+    while hero._hp > 0:
+        print(game_map.show_map((hero._row, hero._col)))
+        print(hero)
+        print("1. Go North")
+        print("2. Go South")
+        print("3. Go East")
+        print("4. Go West")
+        print("5. Quit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            move_result = hero.go_north()
+        elif choice == '2':
+            move_result = hero.go_south()
+        elif choice == '3':
+            move_result = hero.go_east()
+        elif choice == '4':
+            move_result = hero.go_west()
+        elif choice == '5':
+            print("Quitting the game.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+            continue
+
+        if move_result == 'o':
+            print("You cannot move in that direction.")
+        else:
+            game_map.reveal((hero._row, hero._col))
+            location = game_map[hero._row][hero._col]
+
+            if location == 'm':
+                enemy = Enemy()
+                print(f"You encountered a {enemy._name}!")
+
+                while enemy._hp > 0 and hero._hp > 0:
+                    print(enemy)
+                    action = input("Do you want to attack (a) or run away (r)? ")
+
+                    if action == 'a':
+                        print(hero.attack(enemy))
+                        if enemy._hp > 0:
+                            print(enemy.attack(hero))
+                        else:
+                            print(f"You defeated the {enemy._name}!")
+                            game_map.remove_at_loc((hero._row, hero._col))
+                    elif action == 'r':
+                        directions = ['n', 's', 'e', 'w']
+                        random.shuffle(directions)
+                        for direction in directions:
+                            if direction == 'n' and hero.go_north() != 'o':
+                                hero._row -= 1
+                                break
+                            elif direction == 's' and hero.go_south() != 'o':
+                                hero._row += 1
+                                break
+                            elif direction == 'e' and hero.go_east() != 'o':
+                                hero._col += 1
+                                break
+                            elif direction == 'w' and hero.go_west() != 'o':
+                                hero._col -= 1
+                                break
+                        print("You ran away!")
+                        game_map.reveal((hero._row, hero._col))
+                        break
+                    else:
+                        print("Invalid choice. Please try again.")
+            elif location == 'i':
+                print("You found a health potion!")
+                hero.heal()
+                game_map.remove_at_loc((hero._row, hero._col))
+            elif location == 'f':
+                print("Congratulations! You found the exit and won the game!")
+                break
+            else:
+                print("This room is empty.")
+
+    if hero._hp <= 0:
+        print("You have been defeated. Game Over!")
 if __name__ == "__main__":
     main()
