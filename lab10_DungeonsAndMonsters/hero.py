@@ -13,7 +13,7 @@ class Hero(entity.Entity):
         of the map (between 0 and the len(map)-1). If it is, return the character at that
         location, if it isn’t, return an ‘o’ to signify that the direction is out of bounds.
     '''
-    def __init__(self, name):
+    def __init__(self, name, game_map):
         '''Initialize the Hero, setting its name, max HP, and starting location.'''
         super().__init__(name, 25)
         self._row = 0

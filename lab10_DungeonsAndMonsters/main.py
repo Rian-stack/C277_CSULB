@@ -29,8 +29,8 @@ from check_input import get_int_range
 
 def main():
     name = input("Enter your hero's name: ")
-    hero = Hero(name)
     game_map = Map()
+    hero = Hero(name, game_map)
 
     while hero._hp > 0:
         print(game_map.show_map((hero._row, hero._col)))
