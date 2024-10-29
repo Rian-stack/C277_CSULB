@@ -25,6 +25,7 @@ import random
 from hero import Hero
 from map import Map
 from enemy import Enemy
+from check_input import get_int_range
 
 def main():
     name = input("Enter your hero's name: ")
@@ -40,22 +41,19 @@ def main():
         print("4. Go West")
         print("5. Quit")
 
-        choice = input("Enter your choice: ")
+        choice = get_int_range("Enter your choice: ", 1, 5)
 
-        if choice == '1':
+        if choice == 1:
             move_result = hero.go_north()
-        elif choice == '2':
+        elif choice == 2:
             move_result = hero.go_south()
-        elif choice == '3':
+        elif choice == 3:
             move_result = hero.go_east()
-        elif choice == '4':
+        elif choice == 4:
             move_result = hero.go_west()
-        elif choice == '5':
+        elif choice == 5:
             print("Quitting the game.")
             break
-        else:
-            print("Invalid choice. Please try again.")
-            continue
 
         if move_result == 'o':
             print("You cannot move in that direction.")
@@ -69,7 +67,7 @@ def main():
 
                 while enemy._hp > 0 and hero._hp > 0:
                     print(enemy)
-                    action = input("Do you want to attack (a) or run away (r)? ")
+                    action = input("Do you want to attack (a) or run away (r)? ").lower()
 
                     if action == 'a':
                         print(hero.attack(enemy))
