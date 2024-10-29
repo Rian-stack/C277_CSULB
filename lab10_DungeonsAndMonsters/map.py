@@ -30,9 +30,9 @@ class Map:
         return cls._instance
 
     def __init__(self):
-        if not hasattr(self, 'map'):
+        if hasattr(self, 'map') is None:
             self._map = []
-            with open('lab10_DungeonsAndMonsters/map_lab10.txt') as file:
+            with open('map_lab10.txt') as file:
                 for line in file:
                     self._map.append(list(line.strip()))
             self._revealed = [[False for _ in range(len(self._map[0]))] for _ in range(len(self._map))]
@@ -44,17 +44,23 @@ class Map:
         return len(self._map)
 
     def show_map(self, loc):
-        '''Returns a string representation of the map, revealing only explored areas and the hero's location.'''
+        '''
+        Returns a string representation of the map, revealing only explored areas and the hero's location.
+        
+        loc[0] = hero's row and loc[1] = hero's col
+        '''
         map_str = ''
         for row in range(len(self._map)):
             for col in range(len(self._map[0])):
+                #If current cordinate in the loop matches the hero's location
                 if row == loc[0] and col == loc[1]:
                     map_str += '*'
+                #If cordinate is revealed(the hero has been there before)
                 elif self._revealed[row][col]:
                     map_str += self._map[row][col]
+                #If cordinate is not revealed
                 else:
                     map_str += 'x'
-            map_str += '\n'
         return map_str
 
     def reveal(self, loc):
