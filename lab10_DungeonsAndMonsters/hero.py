@@ -31,26 +31,26 @@ class Hero(entity.Entity):
         '''Move the hero one step north if possible.'''
         if self._row > 0:
             self._row -= 1
-            return self._map[self._row][self._col]
+            return self._map.show_map((self._row, self._col))
         return 'o'
 
     def go_south(self):
         '''Move the hero one step south if possible.'''
         if self._row < 9:
             self._row += 1
-            return self._map[self._row][self._col]
+            return self._map.show_map((self._row, self._col))
         return 'o'
 
     def go_east(self):
         '''Move the hero one step east if possible.'''
         if self._col < 9:
             self._col += 1
-            return self._map[self._row][self._col]
+            return self._map.show_map((self._row, self._col))
         return 'o'
 
     def go_west(self):
         '''Move the hero one step west if possible.'''
         if self._col > 0:
             self._col -= 1
-            return self._map[self._row][self._col]
+            return self._map.show_map((self._row, self._col))
         return 'o'
