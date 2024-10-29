@@ -18,6 +18,7 @@ class Hero(entity.Entity):
         super().__init__(name, 25)
         self._row = 0
         self._col = 0
+        self._map = game_map
 
     def attack(self, entity):
         '''Attack an entity, dealing random damage between 2 and 5.'''
