@@ -30,7 +30,7 @@ class Map:
         return cls._instance
 
     def __init__(self):
-        if hasattr(self, 'map') is None:
+        if hasattr(self, '_map') is None:
             self._map = []
             with open('map_lab10.txt') as file:
                 for line in file:
