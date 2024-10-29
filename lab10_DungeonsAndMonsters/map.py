@@ -30,12 +30,12 @@ class Map:
         return cls._instance
 
     def __init__(self):
+        self._map = []
         if hasattr(self, '_map') is None:
-            self._map = []
             with open('map_lab10.txt') as file:
                 for line in file:
                     self._map.append(list(line.strip()))
-            self._revealed = [[False for _ in range(len(self._map[0]))] for _ in range(len(self._map))]
+        self._revealed = [[False for _ in range(len(self._map[0]))] for _ in range(len(self._map))]
 
     def __getitem__(self, row):
         return self._map[row]
