@@ -1,7 +1,7 @@
 import entity 
 import random
 
-class Monster(entity.Entity):
+class Enemy(entity.Entity):
     '''Enemy – extends entity - monster character that the hero encounters in the maze.
         a. __init__(self) – randomizes a name from a list of names (ex. ‘Goblin’, ‘Vampire’,
         ‘Ghoul’, ‘Skeleton’, ‘Zombie, etc) and randomizes the monster’s hp (4-8).

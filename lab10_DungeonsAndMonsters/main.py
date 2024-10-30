@@ -22,16 +22,16 @@
         of the maze and won the game.
 '''
 import random
-import player
+import hero
 import map
-import monster
+import enemy
 import check_input
 
 def main():
     user_name = input("What is your name, traveler? ")
     game_map = map.Map()
-    player = player.Player(user_name, game_map)
-    monster = monster.Monster()
+    player = hero.Hero(user_name, game_map)
+    monster = enemy.Enemy()
 
     #Game Loop
     while player._hp > 0:

@@ -1,6 +1,6 @@
 import entity
 
-class Player(entity.Entity):
+class Hero(entity.Entity):
     '''
     Hero – extends entity - the user’s character
         a. __init__(self, name) – initializes the name and max_hp using super, sets the
