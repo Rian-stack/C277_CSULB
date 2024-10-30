@@ -35,7 +35,7 @@ def main():
     while hero._hp > 0:
         for row in game_map.show_map((hero._row, hero._col)):
             print(row)
-        print(hero)
+        print(f"HP: {hero}")
         print("1. Go North")
         print("2. Go South")
         print("3. Go East")

@@ -31,7 +31,6 @@ class Hero(entity.Entity):
         '''Move the hero one step north if possible.'''
         if self._row > 0:
             self._row -= 1
-            self._row -= 1
         return 'o'
 
     def go_south(self):
