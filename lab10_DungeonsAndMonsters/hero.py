@@ -18,7 +18,7 @@ class Hero(entity.Entity):
         super().__init__(name, 25)
         self._row = 0
         self._col = 0
-        self._map = game_map
+        self._game_map = game_map
 
     def attack(self, entity):
         '''Attack an entity, dealing random damage between 2 and 5.'''
@@ -31,22 +31,26 @@ class Hero(entity.Entity):
         '''Move the hero one step north if possible.'''
         if self._row > 0:
             self._row -= 1
+            return self._game_map[self._row][self._col]
         return 'o'
 
     def go_south(self):
         '''Move the hero one step south if possible.'''
-        if self._row < len(self._map) - 1:
+        if self._row < len(self._game_map) - 1:
             self._row += 1
+            return self._game_map[self._row][self._col]
         return 'o'
 
     def go_east(self):
         '''Move the hero one step east if possible.'''
-        if self._col < len(self._map[0]) - 1:
+        if self._col < len(self._game_map[0]) - 1:
             self._col += 1
+            return self._game_map[self._row][self._col]
         return 'o'
 
     def go_west(self):
         '''Move the hero one step west if possible.'''
         if self._col > 0:
             self._col -= 1
+            return self._game_map[self._row][self._col]
         return 'o'
