@@ -79,15 +79,6 @@ def main():
                             game_map.remove_at_loc((hero._row, hero._col))
 
                     elif action == '2':
-
-                    if action == 'a':
-                        print(hero.attack(enemy))
-                        if enemy._hp > 0:
-                            print(enemy.attack(hero))
-                        else:
-                            print(f"You defeated the {enemy._name}!")
-                            game_map.remove_at_loc((hero._row, hero._col))
-                    elif action == 'r':
                         directions = ['n', 's', 'e', 'w']
                         random.shuffle(directions)
                         for direction in directions:
