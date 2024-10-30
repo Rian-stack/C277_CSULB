@@ -74,9 +74,13 @@ def main():
 
                     if action == '1':
                         print(hero.attack(enemy))
+                        if enemy._hp > 0:
+                            print(enemy.attack(hero))
                         if enemy._hp <= 0:
                             print(f"You have slain a {enemy._name}")
                             game_map.remove_at_loc((hero._row, hero._col))
+                        elif hero._hp <= 0:
+                            break
 
                     elif action == '2':
                         directions = ['n', 's', 'e', 'w']
