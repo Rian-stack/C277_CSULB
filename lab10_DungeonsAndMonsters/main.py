@@ -86,21 +86,18 @@ def main():
                     elif action == '2':
                         directions = ['n', 's', 'e', 'w']
                         random.shuffle(directions)
+                        directions = ['n', 's', 'e', 'w']
+                        random.shuffle(directions)
                         for direction in directions:
                             if direction == 'n' and hero.go_north() != 'o':
-                                hero._row -= 1
                                 break
                             elif direction == 's' and hero.go_south() != 'o':
-                                hero._row += 1
                                 break
                             elif direction == 'e' and hero.go_east() != 'o':
-                                hero._col += 1
                                 break
                             elif direction == 'w' and hero.go_west() != 'o':
-                                hero._col -= 1
                                 break
                         print("You ran away!")
-                        game_map.reveal((hero._row, hero._col))
                         break
                     else:
                         print("Invalid choice. Please try again.")
