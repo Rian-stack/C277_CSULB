@@ -29,6 +29,10 @@ class Hero(entity.Entity):
 
     def go_north(self):
         '''Move the hero one step north if possible.'''
+        if self._row > 0:
+            self._row -= 1
+            return self._map.show_map((self._row, self._col))[0]
+        return 'o'
     def go_south(self):
         '''Move the hero one step south if possible.'''
         if self._row < 9:
