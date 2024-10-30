@@ -1,6 +1,6 @@
 import entity
 
-class Hero(entity.Entity):
+class Player(entity.Entity):
     '''
     Hero – extends entity - the user’s character
         a. __init__(self, name) – initializes the name and max_hp using super, sets the
@@ -21,7 +21,7 @@ class Hero(entity.Entity):
         self._game_map = game_map
 
     def attack(self, entity):
-        '''Attack an entity, dealing random damage between 2 and 5.'''
+        '''Attack a monster, dealing random damage between 2 and 5.'''
         from random import randint
         damage = randint(2, 5)
         entity.take_damage(damage)

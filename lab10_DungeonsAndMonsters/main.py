@@ -30,8 +30,8 @@ import check_input
 def main():
     user_name = input("What is your name, traveler? ")
     game_map = map.Map()
-    player = hero.Hero(user_name, game_map)
-    monster = enemy.Enemy()
+    player = player.Player(user_name, game_map)
+    monster = monster.Monster()
 
     #Game Loop
     while player._hp > 0:

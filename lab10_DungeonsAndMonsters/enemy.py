@@ -1,7 +1,7 @@
 import entity 
 import random
 
-class Enemy(entity.Entity):
+class Monster(entity.Entity):
     '''Enemy – extends entity - monster character that the hero encounters in the maze.
         a. __init__(self) – randomizes a name from a list of names (ex. ‘Goblin’, ‘Vampire’,
         ‘Ghoul’, ‘Skeleton’, ‘Zombie, etc) and randomizes the monster’s hp (4-8).
@@ -17,7 +17,7 @@ class Enemy(entity.Entity):
         super().__init__(name, hp)
 
     def attack(self, entity):
-        '''Attack the hero, dealing random damage between 1 and 4.'''
+        '''Attack the player, dealing random damage between 1 and 4.'''
         damage = random.randint(1, 4)
         entity.take_damage(damage)
         return f'{self._name} attacks {entity._name} for {damage} damage.'
