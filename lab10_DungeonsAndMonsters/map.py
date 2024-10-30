@@ -36,7 +36,7 @@ class Map:
                 for line in file:
                     self._map.append(list(line.strip()))
         self._revealed = [[False for _ in range(len(self._map[0]))] for _ in range(len(self._map))]
-        self._map[0][0] = 's' # Set starting position
+        self._map[0][0] = 'n' # Set starting position
 
     def __getitem__(self, row):
         return self._map[row]

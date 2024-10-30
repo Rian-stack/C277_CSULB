@@ -35,7 +35,8 @@ def main():
     while hero._hp > 0:
         for row in game_map.show_map((hero._row, hero._col)):
             print(row)
-        print(f"HP: {hero}")
+
+        print(hero)
         print("1. Go North")
         print("2. Go South")
         print("3. Go East")
@@ -67,8 +68,17 @@ def main():
                 print(f"You encountered a {enemy._name}!")
 
                 while enemy._hp > 0 and hero._hp > 0:
-                    print(enemy)
-                    action = input("Do you want to attack (a) or run away (r)? ").lower()
+                    print(f"1. Attack {enemy._name}")
+                    print("2. Run Away")
+                    action = input("Enter choice: ")
+
+                    if action == '1':
+                        print(hero.attack(enemy))
+                        if enemy._hp <= 0:
+                            print(f"You have slain a {enemy._name}")
+                            game_map.remove_at_loc((hero._row, hero._col))
+
+                    elif action == '2':
 
                     if action == 'a':
                         print(hero.attack(enemy))
