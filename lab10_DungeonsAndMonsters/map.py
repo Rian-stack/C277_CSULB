@@ -56,6 +56,10 @@ class Map:
             for col in range(len(self._map[0])):
                 if row == loc[0] and col == loc[1]:
                     row_str += "*"
+                elif row == loc[0] and col == loc[1]:
+                    row_str += "*"
+                elif row == 0 and col == 0 and self._map[row][col] == 's':
+                    row_str += 's'
                 elif self._revealed[row][col]:
                     row_str += self._map[row][col]
                 else:
