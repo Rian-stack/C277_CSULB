@@ -102,6 +102,8 @@ def main():
                 print("You found a health potion!")
                 hero.heal()
                 game_map.remove_at_loc((hero._row, hero._col))
+            elif location == 's':
+                print("You are back at the start of the dungeon.")
             elif location == 'f':
                 print("Congratulations! You found the exit and won the game!")
                 break
