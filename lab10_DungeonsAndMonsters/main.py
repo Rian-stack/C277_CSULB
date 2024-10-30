@@ -22,9 +22,9 @@
         of the maze and won the game.
 '''
 import random
-import hero
+import player
 import map
-import enemy
+import monster
 import check_input
 
 def main():
@@ -39,7 +39,7 @@ def main():
         print(f"HP: {player}")
         for row in game_map.show_map((player._row, player._col)):
             print(row)
-        
+
         print("1. Go North")
         print("2. Go South")
         print("3. Go East")
@@ -79,7 +79,7 @@ def main():
                     print("2. Run Away")
                     action = check_input.get_int_range("Enter choice: ", 1, 2)
 
-                    if action == '1':
+                    if action == 1:
                         print(player.attack(monster))
                         if monster._hp > 0:
                             print(monster.attack(player))
@@ -89,7 +89,7 @@ def main():
                         elif player._hp <= 0:
                             break
 
-                    elif action == '2':
+                    elif action == 2:
                         directions = ['n', 's', 'e', 'w']
                         random.shuffle(directions)
                         directions = ['n', 's', 'e', 'w']
