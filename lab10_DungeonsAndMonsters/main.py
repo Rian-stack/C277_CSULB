@@ -31,15 +31,14 @@ def main():
     user_name = input("What is your name, traveler? ")
     game_map = map.Map()
     player = hero.Hero(user_name, game_map)
-    monster = enemy.Enemy()
 
-    #Game Loop
     while player._hp > 0:
         print(f"\n{player._name}")
         print(f"HP: {player}")
         for row in game_map.show_map((player._row, player._col)):
             print(row)
 
+        
         print("1. Go North")
         print("2. Go South")
         print("3. Go East")
@@ -60,26 +59,22 @@ def main():
             print("Quitting the game.")
             break
 
-        #handles invalid direction
         if move_result == 'o':
             print("You cannot move in that direction.")
-
-        #other encounters
         else:
             game_map.reveal((player._row, player._col))
             location = game_map[player._row][player._col]
 
-            #monster encounter
             if location == 'm':
+                monster = enemy.Enemy()
                 print(f"You encountered a {monster._name}!")
 
-                #monster minigame loop
                 while monster._hp > 0 and player._hp > 0:
                     print(f"1. Attack {monster._name}")
                     print("2. Run Away")
-                    action = check_input.get_int_range("Enter choice: ", 1, 2)
+                    action = input("Enter choice: ")
 
-                    if action == 1:
+                    if action == '1':
                         print(player.attack(monster))
                         if monster._hp > 0:
                             print(monster.attack(player))
@@ -89,7 +84,7 @@ def main():
                         elif player._hp <= 0:
                             break
 
-                    elif action == 2:
+                    elif action == '2':
                         directions = ['n', 's', 'e', 'w']
                         random.shuffle(directions)
                         directions = ['n', 's', 'e', 'w']
@@ -105,28 +100,21 @@ def main():
                                 break
                         print("You ran away!")
                         break
-
-            #item encounter
+                    else:
+                        print("Invalid choice. Please try again.")
             elif location == 'i':
                 print("You found a Health Potion! You drink it to restore your health.")
                 player.heal()
                 game_map.remove_at_loc((player._row, player._col))
-
-            #starting position
             elif location == 's':
                 print("You are back at the start of the dungeon.")
-
-            #final position
             elif location == 'f':
                 print("Congratulations! You found the exit and won the game!")
                 break
-
-            #empty room or 'n'
             else:
                 print("This room is empty.")
 
     if player._hp <= 0:
         print("You have been defeated. Game Over!")
-
 if __name__ == "__main__":
     main()
