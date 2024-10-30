@@ -32,7 +32,7 @@ class Map:
     def __init__(self):
         if not hasattr(self, '_map'):
             self._map = []
-            with open('map_lab10.txt') as file:
+            with open('/Users/rian/c277 Labs/C277_CSULB/lab10_DungeonsAndMonsters/map_lab10.txt') as file:
                 for line in file:
                     self._map.append(list(line.strip()))
         self._revealed = [[False for _ in range(len(self._map[0]))] for _ in range(len(self._map))]
