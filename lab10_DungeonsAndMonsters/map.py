@@ -45,23 +45,22 @@ class Map:
 
     def show_map(self, loc):
         '''
-        Returns a string representation of the map, revealing only explored areas and the hero's location.
-        
-        loc[0] = hero's row and loc[1] = hero's col
+        Returns a list of strings representing the map, revealing only explored areas and the hero's location.
+
+        loc: A tuple containing the hero's row and column (row, col).
         '''
-        map_str = ''
+        map_rows = []
         for row in range(len(self._map)):
+            row_str = ""
             for col in range(len(self._map[0])):
-                #If current cordinate in the loop matches the hero's location
                 if row == loc[0] and col == loc[1]:
-                    map_str += '*'
-                #If cordinate is revealed(the hero has been there before)
+                    row_str += "*"
                 elif self._revealed[row][col]:
-                    map_str += self._map[row][col]
-                #If cordinate is not revealed
+                    row_str += self._map[row][col]
                 else:
-                    map_str += 'x'
-        return map_str
+                    row_str += "x"
+            map_rows.append(row_str)
+        return map_rows
 
     def reveal(self, loc):
         '''Reveals the map at the given location.'''
