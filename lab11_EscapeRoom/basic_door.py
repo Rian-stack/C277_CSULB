@@ -3,8 +3,8 @@ import random
 
 class Basic_Door(door.Door):
     '''                                                                                                                                                                                      
-     A basic door. You either push or pull                                                                                                                                                    
-     '''                                                                                                                                                                                      
+    A basic door. You either push or pull                                                                                                                                                    
+    '''                                                                                                                                                                                      
     def __init__(self):                                                                                                                                                                      
         self._solution = random.randint(1, 2)                                                                                                                                                
         self._input = None                                                                                                                                                                   
@@ -18,9 +18,13 @@ class Basic_Door(door.Door):
     def get_menu_max(self):                                                                                                                                                                  
         return 2                                                                                                                                                                             
                                                                                                                                                                                             
-    def attempt(self, option):                                                                                                                                                               
-        self._input = option                                                                                                                                                                 
-        return "" # Add description of attempt here                                                                                                                                          
+    def attempt(self, option): 
+        '''Update _input attr'''                                                                                                                                                              
+        self._input = option 
+        if option == 1:
+            return "You push the door." 
+        elif option == 2:
+            return "You pull the door."                                                                                                                                    
                                                                                                                                                                                             
     def is_unlocked(self):                                                                                                                                                                   
         return self._input == self._solution                                                                                                                                                 
@@ -29,4 +33,4 @@ class Basic_Door(door.Door):
         return "Try the other way."                                                                                                                                                          
                                                                                                                                                                                             
     def success(self):                                                                                                                                                                       
-        return "" # Add success message here    
+        return "Congratulations, you opened the door."  
