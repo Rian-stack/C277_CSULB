@@ -1,41 +1,40 @@
 import door
 import random
 
-class Combo_Door(door.Door):
-    '''
-    A door with a combination lock. You can spin the dial to a number 1-10.
-    '''
+class ComboDoor(door.Door):
+  def __init__(self):
+    self.solution = random.randint(1,self.get_menu_max())
+  def examine_door(self):
+    return "A door with acombination lock. You can spin the dial to a number 1-10"
 
-    def __init__(self):
-        self._solution = random.randint(1, 10)
-        self._input = None
+  def menu_options(self):
+    return "Enter #1-10: "
 
-    def examine_door(self):
-        return "A door with a combination lock. You can spin the dial to a number 1-10."
+  def get_menu_max(self):
+    return (10)
 
-    def menu_options(self):
-        return "Enter # 1-10:"
+  def attempt(self, option):
+      self.user_input = option
+      return "You entered: " + str(option) 
 
-    def get_menu_max(self):
-        return 10
+  def is_unlocked(self):
+    if self.solution == self.user_input:
+      return True
+    else:
+      return False
 
-    def attempt(self, option):
-        self._input = option
-        if option == self._solution:
-            return ""  # Add success message here
-        elif option < self._solution:
-            return "Too low."
-        else:
-            return "Too high."
+  def clue(self):
+    if not self.is_unlocked():
+      if self.user_input < self.solution:
+         return "Too low"
+      elif self.user_input > self.solution:
+        return "Too high"
+      else:
+        raise ValueError("user_input == solution is True, Even thought is_unlocked() is False")
+      
 
-    def is_unlocked(self):
-        return self._input == self._solution
-
-    def clue(self):
-        if self._input < self._solution:
-            return "Too low."
-        else:
-            return "Too high."
-
-    def success(self):
-        return "You opened the combination lock!"
+  def success(self):
+    if self.is_unlocked():
+      return "You successfull unlocked conmbo door!!"
+    else:
+      return ""
