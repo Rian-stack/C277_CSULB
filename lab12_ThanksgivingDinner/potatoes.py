@@ -3,10 +3,6 @@ import plate_decorator
 class Potatoes(plate_decorator.PlateDecorator):
     """
     An extended PlateDecorator class representing Potatoes.
-
-    This class decorates a Plate object by adding Potatoes to it.
-    It modifies the description, area, weight, and count properties of the Plate
-    to account for the addition of Potatoes.
     """
 
     def __init__(self, p):

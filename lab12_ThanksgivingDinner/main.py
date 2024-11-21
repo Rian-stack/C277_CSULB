@@ -1,11 +1,11 @@
-''' Thanksgiving Dinner
+""" Thanksgiving Dinner
 
 Written by: Sena Matsuzoe, Rianne Papa
 Date: 11/20/2024
 
 A game that has the user add food to their plate without going
 over the weight or area limit of a paper plate.
-'''
+"""
 
 import small_plate
 import large_plate
