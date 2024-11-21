@@ -1,6 +1,8 @@
 import abc
 
 class Plate(abc.ABC):
+    '''An abstract class representing a plate.'''
+
     @abc.abstractmethod
     def description(self):
         '''returns a string description of the plate and what is on it.'''
