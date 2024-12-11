@@ -2,7 +2,6 @@ import state_asleep
 import state_eat
 import state_play
 
-
 class Puppy:
     """Represents the puppy object."""
     
