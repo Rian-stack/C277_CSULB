@@ -1,4 +1,5 @@
 import puppy
+import check_input
 
 def main():
     print("Congratulations on your new puppy!")
@@ -10,7 +11,7 @@ def main():
         print("2. Play with the puppy")
         print("3. Quit")
         
-        choice = input("Enter your choice: ")
+        choice = check_input.get_int_range("Enter choice: ", 1, 3)
         
         if choice == '1':
             print(my_puppy.give_food())
@@ -19,7 +20,5 @@ def main():
         elif choice == '3':
             print("Goodbye!")
             break
-        else:
-            print("Invalid choice. Please try again.")
 
 main()
